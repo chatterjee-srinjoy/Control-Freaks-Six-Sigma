@@ -1,0 +1,301 @@
+prescription_id,patient_id,medication,scheduled_date,refill_date,cost_usd,prescriber,initial_weight,weight_at_stop,percent_wasted,waste_reason
+RXB200016,P1278,Metformin,2025-08-01,2025-08-03,7.03,Dr. Chen,30,8,26.7,Non-adherence
+RXB200149,P1011,Gabapentin,2025-08-01,2025-08-03,34.81,Dr. Chen,60,0,0.0,No waste
+RXB200201,P1177,Risperidone,2025-08-01,2025-08-08,60.54,Dr. Chen,60,30,50.0,Medication change
+RXB200239,P1342,Metformin,2025-08-01,2025-08-01,5.93,Dr. Patel,28,7,25.0,Non-adherence
+RXB200288,P1062,Gabapentin,2025-08-01,2025-08-02,17.22,Dr. Chen,30,0,0.0,No waste
+RXB200014,P1394,Risperidone,2025-08-02,2025-08-03,25.79,Dr. Patel,28,0,0.0,No waste
+RXB200023,P1170,Atorvastatin,2025-08-02,2025-08-03,21.26,Dr. Nguyen,60,0,0.0,No waste
+RXB200041,P1191,Gabapentin,2025-08-02,2025-08-02,13.82,Dr. Nguyen,30,15,50.0,Medication change
+RXB200164,P1338,Insulin glargine,2025-08-02,2025-08-04,59.34,Dr. Smith,30,0,0.0,No waste
+RXB200136,P1302,Metformin,2025-08-03,2025-08-10,5.57,Dr. Smith,30,0,0.0,No waste
+RXB200217,P1337,Amoxicillin,2025-08-03,2025-08-03,7.33,Dr. Lee,30,0,0.0,No waste
+RXB200259,P1048,Amoxicillin,2025-08-03,2025-08-03,12.06,Dr. Nguyen,60,0,0.0,No waste
+RXB200004,P1064,Lisinopril,2025-08-04,2025-08-05,5.22,Dr. Garcia,30,0,0.0,No waste
+RXB200072,P1156,Risperidone,2025-08-04,2025-08-04,32.43,Dr. Patel,30,22,73.3,Deceased
+RXB200118,P1325,Lisinopril,2025-08-04,2025-08-04,10.31,Dr. Johnson,60,0,0.0,No waste
+RXB200130,P1066,Gabapentin,2025-08-04,2025-08-07,29.7,Dr. Lee,60,0,0.0,No waste
+RXB200168,P1331,Metformin,2025-08-04,2025-08-04,13.15,Dr. Johnson,60,15,25.0,Medication change
+RXB200204,P1045,Metformin,2025-08-04,2025-08-04,6.95,Dr. Garcia,30,0,0.0,No waste
+RXB200210,P1388,Metformin,2025-08-04,2025-08-04,6.89,Dr. Smith,28,0,0.0,No waste
+RXB200216,P1169,Warfarin,2025-08-04,2025-08-07,34.44,Dr. Johnson,60,0,0.0,No waste
+RXB200109,P1048,Insulin glargine,2025-08-05,2025-08-19,102.69,Dr. Chen,60,30,50.0,Transfer to hospital
+RXB200238,P1138,Lisinopril,2025-08-05,2025-08-06,5.63,Dr. Nguyen,30,0,0.0,No waste
+RXB200052,P1333,Metformin,2025-08-06,2025-08-06,14.29,Dr. Patel,90,0,0.0,No waste
+RXB200215,P1212,Amoxicillin,2025-08-06,2025-08-06,7.63,Dr. Nguyen,30,0,0.0,No waste
+RXB200230,P1256,Insulin glargine,2025-08-06,2025-08-06,53.0,Dr. Brown,30,0,0.0,No waste
+RXB200242,P1296,Warfarin,2025-08-06,2025-08-13,34.09,Dr. Patel,60,0,0.0,No waste
+RXB200253,P1187,Insulin glargine,2025-08-06,2025-08-06,56.23,Dr. Garcia,28,0,0.0,No waste
+RXB200298,P1377,Sertraline,2025-08-06,2025-08-06,10.72,Dr. Patel,28,0,0.0,No waste
+RXB200003,P1312,Metformin,2025-08-07,2025-08-07,5.25,Dr. Garcia,30,0,0.0,No waste
+RXB200077,P1392,Furosemide,2025-08-07,2025-08-08,5.69,Dr. Chen,28,0,0.0,No waste
+RXB200080,P1006,Metformin,2025-08-07,2025-08-09,19.08,Dr. Chen,90,0,0.0,No waste
+RXB200127,P1027,Sertraline,2025-08-07,2025-08-08,12.99,Dr. Smith,30,0,0.0,No waste
+RXB200293,P1092,Metformin,2025-08-07,2025-08-08,5.39,Dr. Garcia,30,0,0.0,No waste
+RXB200048,P1382,Atorvastatin,2025-08-08,2025-08-08,7.87,Dr. Lee,28,0,0.0,No waste
+RXB200068,P1252,Atorvastatin,2025-08-08,2025-08-09,20.47,Dr. Brown,60,0,0.0,No waste
+RXB200106,P1227,Metformin,2025-08-09,2025-08-09,5.94,Dr. Nguyen,28,7,25.0,Medication change
+RXB200125,P1278,Sertraline,2025-08-09,2025-08-23,11.72,Dr. Patel,28,7,25.0,Medication change
+RXB200126,P1283,Lisinopril,2025-08-09,2025-08-10,4.98,Dr. Garcia,30,8,26.7,Transfer to hospital
+RXB200159,P1037,Insulin glargine,2025-08-09,2025-08-10,95.85,Dr. Garcia,60,0,0.0,No waste
+RXB200244,P1057,Insulin glargine,2025-08-09,2025-08-09,57.51,Dr. Smith,30,8,26.7,Medication change
+RXB200270,P1188,Risperidone,2025-08-09,2025-08-10,56.1,Dr. Nguyen,60,0,0.0,No waste
+RXB200076,P1014,Metformin,2025-08-10,2025-08-11,11.92,Dr. Patel,60,0,0.0,No waste
+RXB200137,P1336,Lisinopril,2025-08-10,2025-08-12,10.82,Dr. Garcia,60,0,0.0,No waste
+RXB200245,P1171,Sertraline,2025-08-10,2025-08-10,30.86,Dr. Nguyen,90,0,0.0,No waste
+RXB200214,P1258,Gabapentin,2025-08-11,2025-08-14,15.86,Dr. Brown,30,22,73.3,Deceased
+RXB200297,P1047,Sertraline,2025-08-11,2025-08-12,10.56,Dr. Johnson,28,0,0.0,No waste
+RXB200084,P1383,Sertraline,2025-08-12,2025-08-15,11.74,Dr. Smith,30,0,0.0,No waste
+RXB200153,P1374,Lisinopril,2025-08-12,2025-08-13,11.03,Dr. Chen,60,0,0.0,No waste
+RXB200207,P1141,Sertraline,2025-08-12,2025-08-14,9.9,Dr. Smith,30,8,26.7,Transfer to hospital
+RXB200212,P1378,Lisinopril,2025-08-12,2025-08-19,5.78,Dr. Chen,30,0,0.0,No waste
+RXB200221,P1105,Warfarin,2025-08-12,2025-08-12,19.05,Dr. Smith,30,15,50.0,Transfer to hospital
+RXB200255,P1291,Atorvastatin,2025-08-12,2025-08-13,22.55,Dr. Chen,60,0,0.0,No waste
+RXB200280,P1275,Metformin,2025-08-12,2025-08-12,12.74,Dr. Smith,60,0,0.0,No waste
+RXB200287,P1314,Gabapentin,2025-08-12,2025-08-19,46.49,Dr. Chen,90,22,24.4,Medication change
+RXB200067,P1218,Sertraline,2025-08-13,2025-08-15,10.3,Dr. Smith,28,14,50.0,Medication change
+RXB200166,P1134,Risperidone,2025-08-13,2025-08-14,24.17,Dr. Garcia,28,0,0.0,No waste
+RXB200196,P1304,Atorvastatin,2025-08-13,2025-08-13,9.22,Dr. Garcia,28,0,0.0,No waste
+RXB200292,P1273,Insulin glargine,2025-08-13,2025-08-13,178.07,Dr. Chen,90,0,0.0,No waste
+RXB200129,P1374,Furosemide,2025-08-14,2025-08-21,22.56,Dr. Nguyen,90,0,0.0,No waste
+RXB200180,P1335,Risperidone,2025-08-14,2025-08-21,70.51,Dr. Nguyen,90,22,24.4,Medication change
+RXB200185,P1069,Gabapentin,2025-08-14,2025-08-15,19.71,Dr. Nguyen,30,0,0.0,No waste
+RXB200235,P1076,Lisinopril,2025-08-14,2025-08-15,9.65,Dr. Johnson,60,0,0.0,No waste
+RXB200059,P1356,Risperidone,2025-08-15,2025-08-17,22.85,Dr. Garcia,28,0,0.0,No waste
+RXB200188,P1021,Furosemide,2025-08-15,2025-08-16,7.17,Dr. Chen,30,15,50.0,Non-adherence
+RXB200198,P1101,Insulin glargine,2025-08-15,2025-08-22,42.31,Dr. Johnson,28,7,25.0,Medication change
+RXB200222,P1265,Risperidone,2025-08-15,2025-08-16,20.94,Dr. Patel,30,0,0.0,No waste
+RXB200252,P1306,Atorvastatin,2025-08-15,2025-08-17,9.48,Dr. Patel,30,0,0.0,No waste
+RXB200018,P1180,Warfarin,2025-08-16,2025-08-16,54.98,Dr. Smith,90,0,0.0,No waste
+RXB200058,P1240,Amoxicillin,2025-08-16,2025-08-17,14.27,Dr. Lee,60,0,0.0,No waste
+RXB200193,P1110,Risperidone,2025-08-16,2025-08-18,70.3,Dr. Nguyen,90,68,75.6,Deceased
+RXB200205,P1267,Insulin glargine,2025-08-16,2025-08-18,111.61,Dr. Nguyen,60,0,0.0,No waste
+RXB200213,P1189,Lisinopril,2025-08-16,2025-08-23,5.24,Dr. Smith,28,0,0.0,No waste
+RXB200277,P1041,Sertraline,2025-08-16,2025-08-16,12.06,Dr. Nguyen,30,0,0.0,No waste
+RXB200006,P1264,Amoxicillin,2025-08-17,2025-08-18,7.79,Dr. Smith,30,8,26.7,Transfer to hospital
+RXB200009,P1238,Atorvastatin,2025-08-17,2025-08-18,23.62,Dr. Brown,60,0,0.0,No waste
+RXB200163,P1366,Atorvastatin,2025-08-17,2025-08-19,26.53,Dr. Garcia,90,0,0.0,No waste
+RXB200187,P1331,Gabapentin,2025-08-17,2025-08-24,16.25,Dr. Nguyen,30,8,26.7,Non-adherence
+RXB200243,P1321,Gabapentin,2025-08-17,2025-08-18,38.3,Dr. Johnson,60,0,0.0,No waste
+RXB200282,P1359,Risperidone,2025-08-17,2025-08-20,24.2,Dr. Chen,28,0,0.0,No waste
+RXB200019,P1108,Furosemide,2025-08-18,2025-08-18,14.18,Dr. Chen,60,0,0.0,No waste
+RXB200190,P1050,Risperidone,2025-08-18,2025-08-18,23.01,Dr. Brown,28,0,0.0,No waste
+RXB200223,P1088,Gabapentin,2025-08-18,2025-08-20,15.28,Dr. Smith,30,0,0.0,No waste
+RXB200246,P1103,Metformin,2025-08-18,2025-08-18,17.44,Dr. Nguyen,90,0,0.0,No waste
+RXB200281,P1351,Metformin,2025-08-18,2025-08-18,19.25,Dr. Garcia,90,0,0.0,No waste
+RXB200092,P1286,Metformin,2025-08-19,2025-08-19,6.93,Dr. Smith,30,0,0.0,No waste
+RXB200200,P1287,Metformin,2025-08-19,2025-08-19,9.71,Dr. Garcia,60,0,0.0,No waste
+RXB200279,P1374,Insulin glargine,2025-08-19,2025-08-26,144.23,Dr. Nguyen,90,0,0.0,No waste
+RXB200001,P1332,Furosemide,2025-08-20,2025-08-21,6.83,Dr. Patel,30,0,0.0,No waste
+RXB200017,P1302,Metformin,2025-08-20,2025-08-27,6.22,Dr. Smith,30,0,0.0,No waste
+RXB200037,P1389,Insulin glargine,2025-08-20,2025-08-20,39.56,Dr. Brown,30,15,50.0,Transfer to hospital
+RXB200151,P1368,Metformin,2025-08-20,2025-08-20,13.28,Dr. Chen,60,0,0.0,No waste
+RXB200209,P1251,Metformin,2025-08-20,2025-08-21,5.24,Dr. Nguyen,28,0,0.0,No waste
+RXB200284,P1358,Lisinopril,2025-08-20,2025-08-22,4.7,Dr. Lee,30,8,26.7,Medication change
+RXB200295,P1303,Metformin,2025-08-20,2025-08-21,5.59,Dr. Nguyen,28,0,0.0,No waste
+RXB200010,P1208,Risperidone,2025-08-21,2025-08-22,52.09,Dr. Chen,60,0,0.0,No waste
+RXB200034,P1364,Metformin,2025-08-21,2025-08-22,6.83,Dr. Johnson,30,0,0.0,No waste
+RXB200074,P1142,Insulin glargine,2025-08-21,2025-08-23,53.77,Dr. Lee,30,15,50.0,Transfer to hospital
+RXB200112,P1243,Sertraline,2025-08-21,2025-08-21,29.68,Dr. Garcia,90,0,0.0,No waste
+RXB200177,P1138,Sertraline,2025-08-21,2025-08-23,12.76,Dr. Smith,30,0,0.0,No waste
+RXB200240,P1004,Furosemide,2025-08-21,2025-08-21,13.64,Dr. Chen,60,0,0.0,No waste
+RXB200015,P1048,Lisinopril,2025-08-22,2025-08-29,5.75,Dr. Smith,30,0,0.0,No waste
+RXB200024,P1326,Risperidone,2025-08-22,2025-08-29,26.62,Dr. Brown,28,0,0.0,No waste
+RXB200030,P1326,Insulin glargine,2025-08-22,2025-08-24,144.33,Dr. Garcia,60,0,0.0,No waste
+RXB200047,P1142,Risperidone,2025-08-22,2025-08-23,66.69,Dr. Garcia,90,0,0.0,No waste
+RXB200050,P1395,Gabapentin,2025-08-22,2025-09-05,27.63,Dr. Patel,60,0,0.0,No waste
+RXB200082,P1172,Gabapentin,2025-08-22,2025-08-23,15.43,Dr. Garcia,30,15,50.0,Medication change
+RXB200147,P1141,Atorvastatin,2025-08-22,2025-08-29,9.84,Dr. Brown,30,0,0.0,No waste
+RXB200150,P1143,Gabapentin,2025-08-22,2025-08-29,11.73,Dr. Patel,28,0,0.0,No waste
+RXB200233,P1362,Lisinopril,2025-08-22,2025-08-22,9.98,Dr. Smith,60,15,25.0,Medication change
+RXB200236,P1321,Atorvastatin,2025-08-22,2025-08-22,11.39,Dr. Chen,30,0,0.0,No waste
+RXB200294,P1208,Metformin,2025-08-22,2025-08-24,6.13,Dr. Johnson,30,0,0.0,No waste
+RXB200022,P1013,Metformin,2025-08-23,2025-08-24,14.27,Dr. Garcia,60,0,0.0,No waste
+RXB200039,P1147,Lisinopril,2025-08-23,2025-08-24,10.66,Dr. Smith,60,0,0.0,No waste
+RXB200103,P1272,Lisinopril,2025-08-23,2025-08-30,11.18,Dr. Brown,60,0,0.0,No waste
+RXB200256,P1252,Warfarin,2025-08-23,2025-08-23,19.75,Dr. Patel,30,0,0.0,No waste
+RXB200272,P1072,Risperidone,2025-08-23,2025-08-24,63.67,Dr. Chen,90,0,0.0,No waste
+RXB200098,P1279,Insulin glargine,2025-08-24,2025-08-24,120.94,Dr. Nguyen,60,30,50.0,Medication change
+RXB200108,P1167,Furosemide,2025-08-24,2025-08-31,11.77,Dr. Chen,60,0,0.0,No waste
+RXB200158,P1228,Lisinopril,2025-08-24,2025-08-24,5.4,Dr. Johnson,30,15,50.0,Non-adherence
+RXB200176,P1351,Lisinopril,2025-08-24,2025-08-27,9.46,Dr. Smith,60,0,0.0,No waste
+RXB200202,P1234,Lisinopril,2025-08-24,2025-08-24,5.37,Dr. Patel,28,0,0.0,No waste
+RXB200232,P1035,Insulin glargine,2025-08-24,2025-08-24,56.16,Dr. Patel,30,15,50.0,Medication change
+RXB200271,P1049,Gabapentin,2025-08-24,2025-08-24,13.66,Dr. Johnson,28,0,0.0,No waste
+RXB200276,P1104,Insulin glargine,2025-08-24,2025-08-24,57.23,Dr. Lee,30,0,0.0,No waste
+RXB200054,P1106,Insulin glargine,2025-08-25,2025-08-26,99.59,Dr. Garcia,60,0,0.0,No waste
+RXB200071,P1255,Atorvastatin,2025-08-25,2025-08-26,12.58,Dr. Smith,30,0,0.0,No waste
+RXB200085,P1250,Risperidone,2025-08-25,2025-08-25,87.32,Dr. Chen,90,0,0.0,No waste
+RXB200146,P1202,Risperidone,2025-08-25,2025-08-28,24.75,Dr. Brown,30,0,0.0,No waste
+RXB200286,P1257,Sertraline,2025-08-25,2025-08-26,20.51,Dr. Chen,60,0,0.0,No waste
+RXB200111,P1284,Insulin glargine,2025-08-26,2025-09-09,56.98,Dr. Chen,30,0,0.0,No waste
+RXB200263,P1148,Insulin glargine,2025-08-26,2025-08-27,159.18,Dr. Patel,90,0,0.0,No waste
+RXB200020,P1074,Metformin,2025-08-27,2025-08-28,4.81,Dr. Patel,28,0,0.0,No waste
+RXB200138,P1069,Risperidone,2025-08-27,2025-08-29,23.51,Dr. Smith,28,0,0.0,No waste
+RXB200123,P1095,Sertraline,2025-08-28,2025-08-29,27.36,Dr. Patel,60,30,50.0,Transfer to hospital
+RXB200143,P1128,Warfarin,2025-08-28,2025-08-31,18.5,Dr. Garcia,30,0,0.0,No waste
+RXB200013,P1298,Atorvastatin,2025-08-29,2025-08-31,21.31,Dr. Chen,60,0,0.0,No waste
+RXB200075,P1250,Risperidone,2025-08-29,2025-09-05,21.29,Dr. Lee,28,7,25.0,Administrative error
+RXB200005,P1046,Amoxicillin,2025-08-30,2025-09-01,7.45,Dr. Lee,30,0,0.0,No waste
+RXB200032,P1299,Sertraline,2025-08-30,2025-08-30,13.57,Dr. Johnson,28,7,25.0,Medication change
+RXB200086,P1136,Risperidone,2025-08-30,2025-09-13,57.03,Dr. Smith,60,15,25.0,Medication change
+RXB200181,P1136,Atorvastatin,2025-08-30,2025-08-31,10.94,Dr. Nguyen,30,0,0.0,No waste
+RXB200299,P1398,Lisinopril,2025-08-30,2025-08-31,4.15,Dr. Chen,30,0,0.0,No waste
+RXB200011,P1141,Risperidone,2025-08-31,2025-08-31,26.25,Dr. Chen,30,8,26.7,Non-adherence
+RXB200060,P1184,Gabapentin,2025-08-31,2025-09-14,16.62,Dr. Garcia,30,8,26.7,Medication change
+RXB200101,P1211,Atorvastatin,2025-08-31,2025-08-31,34.97,Dr. Patel,90,0,0.0,No waste
+RXB200139,P1208,Insulin glargine,2025-08-31,2025-09-02,93.22,Dr. Patel,60,0,0.0,No waste
+RXB200199,P1322,Gabapentin,2025-08-31,2025-09-01,29.51,Dr. Garcia,60,0,0.0,No waste
+RXB200218,P1333,Insulin glargine,2025-08-31,2025-08-31,47.68,Dr. Chen,28,21,75.0,Transfer to hospital
+RXB200285,P1362,Sertraline,2025-08-31,2025-09-02,28.99,Dr. Chen,60,15,25.0,Medication change
+RXB200073,P1115,Gabapentin,2025-09-01,2025-09-08,15.82,Dr. Chen,28,0,0.0,No waste
+RXB200120,P1318,Amoxicillin,2025-09-01,2025-09-02,16.3,Dr. Garcia,60,0,0.0,No waste
+RXB200132,P1299,Amoxicillin,2025-09-01,2025-09-02,14.54,Dr. Patel,60,0,0.0,No waste
+RXB200254,P1151,Sertraline,2025-09-01,2025-09-01,12.48,Dr. Garcia,30,22,73.3,Transfer to hospital
+RXB200265,P1351,Metformin,2025-09-01,2025-09-02,5.42,Dr. Smith,30,15,50.0,Transfer to hospital
+RXB200002,P1232,Sertraline,2025-09-02,2025-09-02,10.1,Dr. Chen,30,0,0.0,No waste
+RXB200025,P1335,Amoxicillin,2025-09-02,2025-09-03,6.1,Dr. Patel,30,0,0.0,No waste
+RXB200028,P1116,Lisinopril,2025-09-02,2025-09-02,12.73,Dr. Smith,60,0,0.0,No waste
+RXB200042,P1056,Gabapentin,2025-09-02,2025-09-02,26.16,Dr. Smith,60,0,0.0,No waste
+RXB200049,P1148,Gabapentin,2025-09-02,2025-09-02,12.61,Dr. Garcia,28,0,0.0,No waste
+RXB200062,P1150,Metformin,2025-09-02,2025-09-04,7.96,Dr. Smith,30,0,0.0,No waste
+RXB200206,P1317,Insulin glargine,2025-09-02,2025-09-02,55.68,Dr. Lee,30,0,0.0,No waste
+RXB200249,P1176,Sertraline,2025-09-02,2025-09-04,13.75,Dr. Lee,30,8,26.7,Medication change
+RXB200043,P1128,Risperidone,2025-09-03,2025-09-05,23.5,Dr. Patel,28,0,0.0,No waste
+RXB200145,P1315,Metformin,2025-09-03,2025-09-17,10.45,Dr. Chen,60,0,0.0,No waste
+RXB200174,P1118,Gabapentin,2025-09-03,2025-09-05,16.82,Dr. Chen,30,22,73.3,Expired stock
+RXB200261,P1145,Furosemide,2025-09-03,2025-09-03,6.51,Dr. Nguyen,30,0,0.0,No waste
+RXB200026,P1117,Warfarin,2025-09-04,2025-09-05,19.6,Dr. Patel,28,0,0.0,No waste
+RXB200090,P1392,Sertraline,2025-09-04,2025-09-04,22.97,Dr. Patel,60,30,50.0,Non-adherence
+RXB200122,P1228,Amoxicillin,2025-09-04,2025-09-11,15.48,Dr. Smith,60,0,0.0,No waste
+RXB200184,P1102,Insulin glargine,2025-09-04,2025-09-18,124.88,Dr. Garcia,60,0,0.0,No waste
+RXB200220,P1216,Furosemide,2025-09-04,2025-09-06,5.1,Dr. Smith,28,0,0.0,No waste
+RXB200097,P1131,Metformin,2025-09-05,2025-09-06,12.61,Dr. Patel,60,0,0.0,No waste
+RXB200099,P1066,Atorvastatin,2025-09-05,2025-09-05,8.55,Dr. Nguyen,28,0,0.0,No waste
+RXB200162,P1256,Lisinopril,2025-09-05,2025-09-06,4.65,Dr. Nguyen,28,0,0.0,No waste
+RXB200183,P1355,Risperidone,2025-09-05,2025-09-19,20.49,Dr. Chen,30,15,50.0,Non-adherence
+RXB200197,P1327,Furosemide,2025-09-05,2025-09-06,7.59,Dr. Nguyen,28,0,0.0,No waste
+RXB200224,P1073,Gabapentin,2025-09-05,2025-09-05,34.01,Dr. Nguyen,60,0,0.0,No waste
+RXB200283,P1230,Risperidone,2025-09-05,2025-09-05,29.15,Dr. Patel,30,8,26.7,Medication change
+RXB200102,P1100,Insulin glargine,2025-09-06,2025-09-06,52.51,Dr. Nguyen,28,0,0.0,No waste
+RXB200229,P1248,Metformin,2025-09-06,2025-09-06,6.45,Dr. Lee,30,8,26.7,Non-adherence
+RXB200038,P1276,Risperidone,2025-09-07,2025-09-08,29.88,Dr. Johnson,30,22,73.3,Deceased
+RXB200170,P1155,Atorvastatin,2025-09-07,2025-09-07,17.79,Dr. Chen,60,30,50.0,Non-adherence
+RXB200182,P1242,Atorvastatin,2025-09-07,2025-09-10,9.17,Dr. Smith,28,0,0.0,No waste
+RXB200241,P1185,Warfarin,2025-09-07,2025-09-14,19.9,Dr. Garcia,30,0,0.0,No waste
+RXB200289,P1323,Atorvastatin,2025-09-07,2025-09-07,20.73,Dr. Smith,60,0,0.0,No waste
+RXB200296,P1355,Warfarin,2025-09-07,2025-09-07,15.28,Dr. Johnson,28,0,0.0,No waste
+RXB200021,P1323,Sertraline,2025-09-08,2025-09-15,27.5,Dr. Patel,60,0,0.0,No waste
+RXB200033,P1154,Furosemide,2025-09-08,2025-09-15,15.27,Dr. Nguyen,90,0,0.0,No waste
+RXB200065,P1191,Lisinopril,2025-09-08,2025-09-09,5.54,Dr. Smith,30,0,0.0,No waste
+RXB200144,P1339,Risperidone,2025-09-08,2025-09-09,47.03,Dr. Patel,60,45,75.0,Deceased
+RXB200208,P1096,Furosemide,2025-09-08,2025-09-22,5.76,Dr. Johnson,28,0,0.0,No waste
+RXB200027,P1249,Furosemide,2025-09-09,2025-09-23,6.7,Dr. Garcia,28,14,50.0,Non-adherence
+RXB200031,P1335,Metformin,2025-09-09,2025-09-10,21.33,Dr. Chen,90,0,0.0,No waste
+RXB200178,P1319,Warfarin,2025-09-09,2025-09-11,24.87,Dr. Johnson,30,0,0.0,No waste
+RXB200273,P1316,Warfarin,2025-09-09,2025-09-09,56.39,Dr. Smith,90,0,0.0,No waste
+RXB200000,P1156,Sertraline,2025-09-10,2025-09-10,8.87,Dr. Patel,28,7,25.0,Medication change
+RXB200040,P1116,Warfarin,2025-09-10,2025-09-13,61.1,Dr. Chen,90,0,0.0,No waste
+RXB200057,P1383,Atorvastatin,2025-09-10,2025-09-12,17.62,Dr. Chen,60,45,75.0,Deceased
+RXB200091,P1077,Warfarin,2025-09-10,2025-09-11,22.46,Dr. Smith,30,0,0.0,No waste
+RXB200172,P1044,Gabapentin,2025-09-10,2025-09-17,16.29,Dr. Patel,28,14,50.0,Non-adherence
+RXB200234,P1059,Metformin,2025-09-10,2025-09-12,5.93,Dr. Nguyen,30,0,0.0,No waste
+RXB200053,P1254,Insulin glargine,2025-09-11,2025-09-18,47.37,Dr. Patel,30,8,26.7,Transfer to hospital
+RXB200070,P1354,Amoxicillin,2025-09-11,2025-09-13,6.42,Dr. Johnson,28,0,0.0,No waste
+RXB200179,P1324,Lisinopril,2025-09-11,2025-09-11,15.94,Dr. Patel,90,0,0.0,No waste
+RXB200104,P1207,Atorvastatin,2025-09-12,2025-09-12,9.84,Dr. Garcia,30,0,0.0,No waste
+RXB200061,P1079,Risperidone,2025-09-13,2025-09-13,50.94,Dr. Johnson,60,30,50.0,Transfer to hospital
+RXB200250,P1052,Risperidone,2025-09-13,2025-09-13,29.74,Dr. Chen,30,0,0.0,No waste
+RXB200257,P1121,Atorvastatin,2025-09-13,2025-09-20,10.51,Dr. Patel,30,0,0.0,No waste
+RXB200154,P1074,Risperidone,2025-09-14,2025-09-15,28.03,Dr. Smith,30,15,50.0,Medication change
+RXB200171,P1337,Warfarin,2025-09-14,2025-09-28,62.1,Dr. Patel,90,0,0.0,No waste
+RXB200219,P1294,Risperidone,2025-09-14,2025-09-17,24.8,Dr. Johnson,30,0,0.0,No waste
+RXB200114,P1273,Metformin,2025-09-15,2025-09-22,6.23,Dr. Patel,28,0,0.0,No waste
+RXB200189,P1208,Insulin glargine,2025-09-15,2025-09-22,46.28,Dr. Garcia,30,0,0.0,No waste
+RXB200192,P1305,Atorvastatin,2025-09-15,2025-09-15,23.92,Dr. Garcia,60,0,0.0,No waste
+RXB200267,P1022,Risperidone,2025-09-15,2025-09-22,25.7,Dr. Smith,28,0,0.0,No waste
+RXB200008,P1390,Amoxicillin,2025-09-16,2025-09-16,16.53,Dr. Johnson,60,0,0.0,No waste
+RXB200064,P1112,Sertraline,2025-09-16,2025-09-16,10.67,Dr. Nguyen,30,0,0.0,No waste
+RXB200081,P1247,Sertraline,2025-09-16,2025-09-30,38.81,Dr. Lee,90,22,24.4,Non-adherence
+RXB200121,P1300,Lisinopril,2025-09-16,2025-09-30,5.77,Dr. Chen,30,0,0.0,No waste
+RXB200107,P1102,Sertraline,2025-09-17,2025-09-18,12.63,Dr. Smith,30,0,0.0,No waste
+RXB200133,P1242,Sertraline,2025-09-17,2025-09-19,12.94,Dr. Chen,30,0,0.0,No waste
+RXB200157,P1216,Furosemide,2025-09-17,2025-09-19,6.07,Dr. Chen,30,0,0.0,No waste
+RXB200225,P1100,Insulin glargine,2025-09-17,2025-09-20,64.78,Dr. Smith,30,8,26.7,Medication change
+RXB200278,P1376,Lisinopril,2025-09-17,2025-09-17,5.22,Dr. Patel,28,0,0.0,No waste
+RXB200046,P1383,Atorvastatin,2025-09-18,2025-09-19,24.28,Dr. Nguyen,60,0,0.0,No waste
+RXB200093,P1009,Atorvastatin,2025-09-18,2025-09-18,9.47,Dr. Garcia,28,0,0.0,No waste
+RXB200110,P1329,Furosemide,2025-09-18,2025-09-20,5.18,Dr. Patel,30,15,50.0,Transfer to hospital
+RXB200115,P1169,Lisinopril,2025-09-18,2025-09-19,17.64,Dr. Patel,90,0,0.0,No waste
+RXB200135,P1387,Sertraline,2025-09-18,2025-09-20,23.46,Dr. Nguyen,60,30,50.0,Medication change
+RXB200142,P1097,Sertraline,2025-09-18,2025-10-02,12.7,Dr. Johnson,30,0,0.0,No waste
+RXB200155,P1345,Risperidone,2025-09-18,2025-09-19,23.23,Dr. Garcia,30,15,50.0,Medication change
+RXB200290,P1261,Sertraline,2025-09-18,2025-09-20,14.01,Dr. Garcia,30,15,50.0,Non-adherence
+RXB200291,P1223,Atorvastatin,2025-09-18,2025-09-20,11.11,Dr. Johnson,30,0,0.0,No waste
+RXB200096,P1364,Insulin glargine,2025-09-19,2025-09-20,41.56,Dr. Chen,28,14,50.0,Medication change
+RXB200140,P1115,Lisinopril,2025-09-19,2025-09-19,5.35,Dr. Smith,28,0,0.0,No waste
+RXB200012,P1085,Metformin,2025-09-20,2025-09-20,6.76,Dr. Chen,28,0,0.0,No waste
+RXB200035,P1198,Warfarin,2025-09-20,2025-09-20,16.5,Dr. Johnson,30,8,26.7,Transfer to hospital
+RXB200063,P1055,Atorvastatin,2025-09-20,2025-09-20,10.18,Dr. Patel,28,0,0.0,No waste
+RXB200124,P1068,Gabapentin,2025-09-20,2025-09-21,29.3,Dr. Chen,60,30,50.0,Transfer to hospital
+RXB200134,P1286,Metformin,2025-09-20,2025-09-21,20.5,Dr. Johnson,90,0,0.0,No waste
+RXB200167,P1169,Warfarin,2025-09-20,2025-09-22,23.63,Dr. Garcia,30,15,50.0,Transfer to hospital
+RXB200274,P1359,Atorvastatin,2025-09-20,2025-09-20,9.66,Dr. Lee,30,0,0.0,No waste
+RXB200069,P1086,Gabapentin,2025-09-21,2025-09-22,12.48,Dr. Brown,28,0,0.0,No waste
+RXB200262,P1333,Metformin,2025-09-21,2025-09-23,4.72,Dr. Garcia,30,0,0.0,No waste
+RXB200029,P1389,Lisinopril,2025-09-22,2025-09-29,17.83,Dr. Chen,90,0,0.0,No waste
+RXB200095,P1225,Warfarin,2025-09-22,2025-09-24,22.11,Dr. Brown,30,0,0.0,No waste
+RXB200269,P1059,Lisinopril,2025-09-22,2025-10-06,4.6,Dr. Patel,28,0,0.0,No waste
+RXB200044,P1235,Warfarin,2025-09-23,2025-09-23,39.9,Dr. Johnson,60,15,25.0,Non-adherence
+RXB200051,P1232,Atorvastatin,2025-09-23,2025-09-23,7.92,Dr. Smith,30,0,0.0,No waste
+RXB200088,P1322,Gabapentin,2025-09-23,2025-09-30,29.94,Dr. Smith,60,30,50.0,Medication change
+RXB200094,P1213,Furosemide,2025-09-23,2025-09-30,7.14,Dr. Lee,30,0,0.0,No waste
+RXB200100,P1360,Warfarin,2025-09-23,2025-09-26,40.91,Dr. Nguyen,60,0,0.0,No waste
+RXB200116,P1033,Metformin,2025-09-23,2025-09-26,12.49,Dr. Garcia,60,15,25.0,Administrative error
+RXB200194,P1310,Metformin,2025-09-23,2025-09-30,12.61,Dr. Smith,60,0,0.0,No waste
+RXB200264,P1310,Insulin glargine,2025-09-23,2025-09-23,53.19,Dr. Smith,28,0,0.0,No waste
+RXB200186,P1203,Amoxicillin,2025-09-24,2025-09-27,6.51,Dr. Patel,28,0,0.0,No waste
+RXB200231,P1078,Lisinopril,2025-09-24,2025-09-25,6.21,Dr. Nguyen,30,0,0.0,No waste
+RXB200251,P1304,Gabapentin,2025-09-24,2025-10-08,30.29,Dr. Brown,60,30,50.0,Medication change
+RXB200056,P1201,Risperidone,2025-09-25,2025-10-02,28.34,Dr. Patel,30,15,50.0,Transfer to hospital
+RXB200113,P1309,Gabapentin,2025-09-25,2025-09-28,17.64,Dr. Patel,28,0,0.0,No waste
+RXB200156,P1004,Atorvastatin,2025-09-25,2025-09-25,8.71,Dr. Chen,28,0,0.0,No waste
+RXB200226,P1075,Risperidone,2025-09-25,2025-09-25,24.91,Dr. Brown,28,14,50.0,Non-adherence
+RXB200258,P1398,Insulin glargine,2025-09-25,2025-10-09,67.53,Dr. Lee,30,0,0.0,No waste
+RXB200036,P1329,Atorvastatin,2025-09-26,2025-09-27,27.96,Dr. Smith,90,0,0.0,No waste
+RXB200087,P1228,Atorvastatin,2025-09-26,2025-10-10,10.51,Dr. Chen,30,0,0.0,No waste
+RXB200119,P1055,Sertraline,2025-09-26,2025-09-26,28.4,Dr. Garcia,60,30,50.0,Medication change
+RXB200203,P1197,Furosemide,2025-09-26,2025-09-27,13.4,Dr. Smith,60,0,0.0,No waste
+RXB200237,P1163,Warfarin,2025-09-26,2025-09-27,21.87,Dr. Nguyen,30,0,0.0,No waste
+RXB200007,P1312,Lisinopril,2025-09-27,2025-09-27,11.08,Dr. Lee,60,0,0.0,No waste
+RXB200078,P1369,Metformin,2025-09-27,2025-10-11,10.16,Dr. Chen,60,0,0.0,No waste
+RXB200128,P1093,Risperidone,2025-09-27,2025-09-29,26.21,Dr. Garcia,30,0,0.0,No waste
+RXB200152,P1047,Sertraline,2025-09-27,2025-09-27,12.45,Dr. Smith,28,14,50.0,Medication change
+RXB200169,P1115,Risperidone,2025-09-27,2025-09-28,25.55,Dr. Smith,28,0,0.0,No waste
+RXB200191,P1398,Atorvastatin,2025-09-27,2025-09-27,10.11,Dr. Johnson,30,22,73.3,Transfer to hospital
+RXB200248,P1067,Warfarin,2025-09-27,2025-10-04,27.79,Dr. Garcia,60,0,0.0,No waste
+RXB200268,P1370,Risperidone,2025-09-27,2025-09-27,26.13,Dr. Garcia,30,0,0.0,No waste
+RXB200275,P1258,Sertraline,2025-09-27,2025-09-27,24.28,Dr. Johnson,60,0,0.0,No waste
+RXB200055,P1117,Lisinopril,2025-09-28,2025-09-28,10.38,Dr. Brown,60,0,0.0,No waste
+RXB200066,P1147,Amoxicillin,2025-09-28,2025-10-01,6.12,Dr. Brown,30,0,0.0,No waste
+RXB200117,P1069,Gabapentin,2025-09-28,2025-10-05,34.69,Dr. Lee,90,0,0.0,No waste
+RXB200131,P1180,Metformin,2025-09-28,2025-10-05,18.8,Dr. Nguyen,90,0,0.0,No waste
+RXB200148,P1133,Insulin glargine,2025-09-28,2025-09-28,47.15,Dr. Smith,28,7,25.0,Administrative error
+RXB200165,P1157,Lisinopril,2025-09-28,2025-09-28,5.57,Dr. Chen,30,0,0.0,No waste
+RXB200173,P1216,Warfarin,2025-09-28,2025-10-01,21.14,Dr. Patel,28,0,0.0,No waste
+RXB200211,P1062,Insulin glargine,2025-09-28,2025-09-30,61.31,Dr. Chen,30,0,0.0,No waste
+RXB200227,P1333,Risperidone,2025-09-28,2025-09-29,51.14,Dr. Chen,60,45,75.0,Deceased
+RXB200247,P1389,Risperidone,2025-09-28,2025-09-28,49.59,Dr. Patel,60,15,25.0,Administrative error
+RXB200083,P1145,Furosemide,2025-09-29,2025-09-29,4.75,Dr. Garcia,28,0,0.0,No waste
+RXB200160,P1063,Metformin,2025-09-29,2025-10-01,6.04,Dr. Patel,28,14,50.0,Non-adherence
+RXB200228,P1357,Amoxicillin,2025-09-29,2025-10-02,16.64,Dr. Patel,60,0,0.0,No waste
+RXB200045,P1036,Lisinopril,2025-09-30,2025-10-01,5.07,Dr. Garcia,30,0,0.0,No waste
+RXB200079,P1202,Atorvastatin,2025-09-30,2025-09-30,7.55,Dr. Brown,30,0,0.0,No waste
+RXB200089,P1205,Lisinopril,2025-09-30,2025-10-01,5.45,Dr. Garcia,30,0,0.0,No waste
+RXB200141,P1392,Atorvastatin,2025-09-30,2025-10-02,22.66,Dr. Chen,60,0,0.0,No waste
+RXB200175,P1358,Warfarin,2025-09-30,2025-10-01,36.49,Dr. Lee,60,0,0.0,No waste
+RXB200266,P1006,Warfarin,2025-09-30,2025-09-30,19.51,Dr. Patel,30,0,0.0,No waste
+RXB200105,P1329,Risperidone,2025-10-01,2025-10-03,57.94,Dr. Smith,60,0,0.0,No waste
+RXB200161,P1197,Insulin glargine,2025-10-01,2025-10-08,53.26,Dr. Lee,30,0,0.0,No waste
+RXB200195,P1330,Metformin,2025-10-01,2025-10-15,5.56,Dr. Lee,28,0,0.0,No waste
+RXB200260,P1263,Lisinopril,2025-10-01,2025-10-02,6.14,Dr. Brown,28,0,0.0,No waste
