@@ -1,4 +1,4 @@
-![Team Control Freaks](medhive.png)
+![Team Control Freaks](assets/medhive.png)
 **Category:** Health Systems (Prompt 4)
 
 ---
