@@ -1,7 +1,4 @@
-# app.R — MedHive Themed Actionable Dashboard (clean wording)
-# CSV schema:
-# prescription_id, patient_id, medication, scheduled_date, refill_date,
-# cost_usd, prescriber, initial_weight, weight_at_stop, percent_wasted, waste_reason
+# app.R
 
 suppressPackageStartupMessages({
   library(shiny)
@@ -13,41 +10,45 @@ suppressPackageStartupMessages({
   library(bslib)
 })
 
-# ---------- Theme colors ----------
-bee_yellow <- "#F6C90E"
-honey_gold <- "#FFC107"
-bee_black  <- "#222222"
-wax_cream  <- "#FFF8D6"
-nectar     <- "#FFB703"
-bee_blue   <- "#2A9D8F"
+# ---------- Palette ----------
+med_nav_blue   <- "#0A4D68"
+med_blue       <- "#167BAA"
+med_accent_y   <- "#F6B400"
+med_graydark   <- "#303030"
+med_muted      <- "#6E6E6E"
+med_bg         <- "#FFFFFF"
+med_card_bg    <- "#FFFFFF"
+med_border     <- "#E9EDF0"
 
-bee_fill_pal <- c(
-  "Medication change"     = "#0072B2",  # strong blue
-  "Non-adherence"         = "#56B4E9",  # sky blue
-  "Administrative error"  = "#E69F00",  # orange
-  "Lost medication"       = "#CC79A7",  # magenta
-  "Expired stock"         = "#009E73",  # green
-  "Transfer to hospital"  = "#F0E442",  # yellow-gold accent
-  "Deceased"              = "#999999",  # gray
-  "Other"                 = "#8B4513",  # brown
-  "No waste"              = "#444444"   # dark gray
+med_reason_pal <- c(
+  "Medication change"     = "#0A4D68",
+  "Non-adherence"         = "#3C8DBC",
+  "Administrative error"  = "#F6B400",
+  "Lost medication"       = "#CC79A7",
+  "Expired stock"         = "#009E73",
+  "Transfer to hospital"  = "#F0E442",
+  "Deceased"              = "#999999",
+  "Other"                 = "#8B4513",
+  "No waste"              = "#444444"
 )
 
-bee_theme_plot <- function() {
-  theme_minimal(base_family = "system-ui", base_size = 12) +
+# ---------- Plot theme ----------
+med_theme_plot <- function() {
+  theme_minimal(base_size = 12, base_family = "Poppins") +
     theme(
-      plot.background = element_rect(fill = "white", color = NA),
+      plot.background = element_rect(fill = med_bg, color = NA),
       panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_line(color = "#f0f0f0"),
-      panel.grid.major.y = element_line(color = "#f0f0f0"),
-      axis.title = element_text(color = bee_black),
-      plot.title = element_text(face = "bold", color = bee_black),
-      plot.subtitle = element_text(color = "#555"),
-      legend.position = "bottom"
+      panel.grid.major.x = element_line(color = "#f4f6f7"),
+      panel.grid.major.y = element_line(color = "#f4f6f7"),
+      axis.title = element_text(color = med_graydark),
+      plot.title = element_text(face = "bold", color = med_nav_blue, size = 14),
+      plot.subtitle = element_text(color = med_muted),
+      legend.position = "bottom",
+      legend.title = element_text(face = "bold")
     )
 }
 
-# classify cause
+# ---------- Business logic ----------
 reason_class <- function(reason) {
   dplyr::case_when(
     reason %in% c("Medication change","Non-adherence","Administrative error","Lost medication","Expired stock") ~ "preventable",
@@ -57,7 +58,6 @@ reason_class <- function(reason) {
   )
 }
 
-# data ingest
 read_one_csv <- function(path, label = NULL) {
   df <- readr::read_csv(path, show_col_types = FALSE) %>% clean_names()
   if (is.null(label)) label <- tools::file_path_sans_ext(basename(path))
@@ -81,109 +81,209 @@ in_control_limits <- function(x) {
   tibble(center = center, lcl = center - 3*sigma, ucl = center + 3*sigma, sigma = sigma)
 }
 
-# ---------- Theming ----------
-bee_theme <- bs_theme(
+# ---------- Theme ----------
+med_theme <- bs_theme(
   version = 5,
-  base_font = font_google("Nunito", local = TRUE),
-  heading_font = font_google("Nunito", local = TRUE),
-  primary = bee_yellow,
-  body_bg = "white",
-  text = bee_black
+  base_font = font_google("Poppins", local = TRUE),
+  heading_font = font_google("Poppins", local = TRUE),
+  bg = med_bg, fg = med_graydark, primary = med_nav_blue
 )
 
-bee_css <- HTML(paste0(
-  "
-:root {
-  --bee-yellow: ", bee_yellow, ";
-  --honey-gold: ", honey_gold, ";
-  --bee-black: ", bee_black, ";
-  --wax-cream: ", wax_cream, ";
+# ---------- CSS (header, anchors, feature/contact bands, hero centering) ----------
+med_css <- HTML(paste0("
+:root{
+  --med-nav-blue: ", med_nav_blue, ";
+  --med-blue: ", med_blue, ";
+  --med-accent: ", med_accent_y, ";
+  --med-graydark: ", med_graydark, ";
+  --med-muted: ", med_muted, ";
+  --med-border: ", med_border, ";
+  --med-card-bg: ", med_card_bg, ";
+  --med-bg: ", med_bg, ";
 }
-#bee-banner {
-  background: repeating-linear-gradient(60deg, #fff6bf 0px, #fff6bf 10px, #ffe985 10px, #ffe985 20px);
-  border-bottom: 4px solid ", bee_yellow, ";
-  padding: 18px 16px; margin-bottom: 16px; border-radius: 0 0 16px 16px;
+
+/* smooth scrolling + offset when jumping to sections */
+html { scroll-behavior: smooth; }
+.section { scroll-margin-top: 110px; }
+
+body { background: var(--med-bg); font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color: var(--med-graydark); }
+
+/* ---------- TOP NAVBAR ---------- */
+#top-nav {
+  position: sticky; top: 0; z-index: 1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 6px 32px; border-bottom: 1px solid var(--med-border); background:#fff;
 }
-.kpi-card {
-  background: ", wax_cream, ";
-  border: 2px solid ", honey_gold, ";
-  border-radius: 16px; padding: 12px 14px;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.05);
-}
-.nav-tabs .nav-link.active { background: ", honey_gold, "; color: ", bee_black, "; font-weight: 700; }
-.btn-primary { background: ", honey_gold, "; border-color: ", honey_gold, "; color: ", bee_black, "; font-weight: 700; }
-.small-muted { color:#666; font-size: 12px; }
+#top-nav .brand { display:flex; align-items:center; }
+#top-nav .brand img { height: 200px; margin-top: -18px; }
+#top-nav .nav-links { display:flex; gap:60px; align-items:center; font-weight:600; font-size:18px; letter-spacing:.3px; margin-top:-8px; }
+#top-nav .nav-links a { color: var(--med-muted); text-decoration:none; transition: color .2s; }
+#top-nav .nav-links a:hover { color: var(--med-nav-blue); }
+
+/* ---------- HERO ---------- */
+#hero { padding: 28px 36px 8px 36px; }
+.hero-row { display:flex; gap:28px; align-items:center; }   /* <- vertical center BOTH columns */
+.hero-left { flex:0 0 45%; padding-right:20px; }
+.hero-left .hero-copy { max-width: 560px; }                 /* keep text column narrow-ish */
+.hero-headline { font-size:48px; line-height:1.05; color: var(--med-nav-blue); font-weight:700; margin:6px 0 14px 0; }
+.hero-sub { color: var(--med-muted); font-size:16px; line-height:1.55; }
+
+/* upload card */
+.upload-card { flex:0 0 42%; background: var(--med-card-bg); border:1px solid var(--med-border); border-radius:12px; padding:18px; box-shadow:0 6px 18px rgba(10,77,104,0.04); }
+.upload-card h4 { margin-top:0; color:var(--med-nav-blue); font-weight:700; }
+
+/* KPI cards */
+.kpi-row { display:flex; gap:14px; margin-top:18px; }
+.kpi-card { background:#FBFDFF; border:1px solid var(--med-border); padding:12px 14px; border-radius:10px; flex:1; }
+.kpi-card h4 { margin:0; font-size:12px; color:var(--med-muted); font-weight:600; }
+.kpi-card h3 { margin:6px 0 0 0; font-size:20px; color:var(--med-nav-blue); font-weight:700; }
+
+/* sections + tabs */
+.section-block { padding: 24px 36px; border-top: 1px solid var(--med-border); }
+.section-title { color: var(--med-nav-blue); font-weight:800; margin:0 0 8px 0; }
+
+.main-tabs { padding: 18px 36px 36px 36px; }
+.btn-med { background: var(--med-accent); border-color: var(--med-accent); color:#072235; font-weight:700; }
+
+/* ---------- FEATURE & CONTACT bands ---------- */
+.band { background-color:#0A4D68; color:white; padding:60px 80px; margin-top:20px; overflow-y:auto; }
+.band h2, .band h3 { color:#FFFFFF; font-weight:700; margin:0 0 40px 0; }
+.band .gold { color:#F6B400; font-weight:600; }
+#features .feat-grid { display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; }
+#features .feat-card { flex:1 1 40%; min-width:300px; }
+#features .feat-card h4 { margin: 10px 0 6px 0; }
+
+/* contact specifics */
+#contact .contact-list { font-size:18px; }
+#contact .contact-list a { color:#EAF6FF; text-decoration:underline; }
+#contact .contact-list a:hover { color:#F6B400; }
+#contact .contact-list b { color: #F6B400; }
 "))
 
 # ---------- UI ----------
 ui <- page_fluid(
-  theme = bee_theme, tags$style(bee_css),
+  theme = med_theme, tags$style(med_css),
   
-  div(id = "bee-banner",
-      h3("MedHive: Medication Waste Dashboard")),
-  
-  sidebarLayout(
-    sidebarPanel(
-      h4("Inputs"),
-      fileInput("files", "Upload CSVs (with waste_reason)", multiple = TRUE, accept = ".csv"),
-      dateRangeInput("date", "Date range",
-                     start = "2025-08-01", end = "2025-10-31"),
-      uiOutput("med_picker"),
-      uiOutput("doc_picker"),
-      checkboxGroupInput("class_filter", "Filter by cause",
-                         choices = c("preventable","semi-preventable","non-preventable"),
-                         selected = c("preventable","semi-preventable","non-preventable")),
-      hr(),
-      sliderInput("first_fill_frac", "First-fill fraction (trial supply size)",
-                  min = 0.25, max = 1.00, value = 0.5, step = 0.05),
-      checkboxInput("show_points", "Show points on charts", TRUE),
-      hr(),
-      downloadButton("dl_filtered", "Download filtered data", class = "btn btn-primary")
-    ),
-    
-    mainPanel(
-      fluidRow(
-        column(3, div(class="kpi-card",
-                      h4("Total waste ($)"), h3(textOutput("kpi_waste_cost")))),
-        column(3, div(class="kpi-card",
-                      h4("Preventable ($)"), h3(textOutput("kpi_prev_cost")))),
-        column(3, div(class="kpi-card",
-                      h4("Avg % wasted"), h3(textOutput("kpi_pct")))),
-        column(3, div(class="kpi-card",
-                      h4("Facilities"), h3(textOutput("kpi_fac"))))
-      ),
-      tabsetPanel(
-        tabPanel("Time Series", br(), plotOutput("ts_waste", height = 320)),
-        tabPanel("Causes",
-                 br(),
-                 fluidRow(
-                   column(6, plotOutput("cause_stack_med", height = 340)),
-                   column(6, plotOutput("cause_stack_doc", height = 340))
-                 )),
-        tabPanel("Pareto",
-                 br(),
-                 fluidRow(
-                   column(6, plotOutput("pareto_med", height = 320)),
-                   column(6, plotOutput("pareto_doc", height = 320))
-                 )),
-        tabPanel("Distributions",
-                 br(),
-                 fluidRow(
-                   column(6, plotOutput("hist_pct", height = 320)),
-                   column(6, plotOutput("hist_cost", height = 320))
-                 )),
-        tabPanel("Operational Alerts",
-                 br(),
-                 div(class="small-muted",
-                     "Flags issues you can influence (policy, prescriber coaching, workflow, transfer handoffs)."),
-                 DTOutput("tbl_flags")),
-        tabPanel("Policy Simulator",
-                 br(),
-                 plotOutput("sim_savings_med", height = 340),
-                 DTOutput("tbl_sim_detail")),
-        tabPanel("Top Prescribers (Waste)", br(), DTOutput("tbl_top_prescribers"))
+  # Header with anchors
+  div(id = "top-nav",
+      div(class = "brand", img(src = "logo.png")),  # file at ./www/logo.png
+      div(class = "nav-links",
+          tags$a(href = "#features",  "Features"),
+          tags$a(href = "#visualise", "Visualise"),
+          tags$a(href = "#contact",   "Contact")
       )
-    )
+  ),
+  
+  # Hero
+  div(id = "hero",
+      div(class = "hero-row",
+          div(class = "hero-left",
+              div(class = "hero-copy",
+                  div(class = "hero-headline","Data that drives efficiency, savings, and smarter care"),
+                  div(class = "hero-sub",
+                      "MedHiVE is an intelligent, data-driven dashboard to help nursing homes identify, monitor, and reduce medication waste. ",
+                      "By integrating analytics and quality control methods, MedHiVE turns everyday pharmacy data into actionable insights that cut costs and improve operational efficiency.")
+              )
+          ),
+          div(class = "upload-card",
+              h4("Upload & Configure Your Data"),
+              p(style = "margin-top:0; color:var(--med-muted); font-size:13px;",
+                "Import your facility CSVs and set the window and filters for your analysis."),
+              tags$hr(),
+              fileInput("files", NULL, multiple = TRUE, buttonLabel = "Browse", placeholder = "No file selected", accept = ".csv"),
+              dateRangeInput("date", "Date range", start = "2025-08-01", end = "2025-10-31"),
+              uiOutput("med_picker"),
+              uiOutput("doc_picker"),
+              checkboxGroupInput("class_filter", "Filter by cause",
+                                 choices = c("preventable","semi-preventable","non-preventable"),
+                                 selected = c("preventable","semi-preventable","non-preventable")),
+              hr(),
+              sliderInput("first_fill_frac", "First-fill fraction (trial supply size)", 0.25, 1.0, 0.5, 0.05),
+              checkboxInput("show_points", "Show points on charts", TRUE),
+              hr(),
+              downloadButton("dl_filtered", "Download filtered data", class = "btn btn-med")
+          )
+      )
+  ),
+  
+  # -------- Features section (anchor target: #features) --------
+  div(id = "features", class = "section band",
+      h2("Key Features"),
+      div(class = "feat-grid",
+          div(class = "feat-card",
+              tags$img(src = "icons/analytics.png", height = "40px", style = "margin-bottom:10px;"),
+              h4(class = "gold","Smart Analytics"),
+              p("Interactive Pareto charts, time trends, and dashboards identify where medication waste occurs most often.")
+          ),
+          div(class = "feat-card",
+              tags$img(src = "icons/alert.png", height = "40px", style = "margin-bottom:10px;"),
+              h4(class = "gold","Operational Alerts"),
+              p("Flags preventable waste causes such as duplicate prescriptions and unused stock for faster response.")
+          ),
+          div(class = "feat-card",
+              tags$img(src = "icons/simulator.png", height = "40px", style = "margin-bottom:10px;"),
+              h4(class = "gold","Policy Simulation Engine"),
+              p("Test different supply policies and estimate potential cost savings before real-world implementation.")
+          ),
+          div(class = "feat-card",
+              tags$img(src = "icons/insights.png", height = "40px", style = "margin-bottom:10px;"),
+              h4(class = "gold","Quality Insights"),
+              p("Six Sigma control checks detect unusual waste patterns for targeted administrative action.")
+          )
+      )
+  ),
+  
+  # -------- Visualise (main dashboard; anchor target: #visualise) --------
+  div(id = "visualise", class = "section",
+      div(class = "main-tabs",
+          div(class = "kpi-row",
+              div(class = "kpi-card", h4("Total waste ($)"), h3(textOutput("kpi_waste_cost"))),
+              div(class = "kpi-card", h4("Preventable ($)"), h3(textOutput("kpi_prev_cost"))),
+              div(class = "kpi-card", h4("Avg % wasted"), h3(textOutput("kpi_pct"))),
+              div(class = "kpi-card", h4("Facilities"), h3(textOutput("kpi_fac")))
+          ),
+          tabsetPanel(
+            tabPanel("Time Series", br(), plotOutput("ts_waste", height = 320)),
+            tabPanel("Causes",
+                     br(),
+                     fluidRow(
+                       column(6, plotOutput("cause_stack_med", height = 340)),
+                       column(6, plotOutput("cause_stack_doc", height = 340))
+                     )),
+            tabPanel("Pareto",
+                     br(),
+                     fluidRow(
+                       column(6, plotOutput("pareto_med", height = 320)),
+                       column(6, plotOutput("pareto_doc", height = 320))
+                     )),
+            tabPanel("Distributions",
+                     br(),
+                     fluidRow(
+                       column(6, plotOutput("hist_pct", height = 320)),
+                       column(6, plotOutput("hist_cost", height = 320))
+                     )),
+            tabPanel("Operational Alerts",
+                     br(),
+                     div(style = "color:var(--med-muted); font-size:13px;",
+                         "Flags issues you can influence (policy, prescriber coaching, workflow, transfer handoffs)."),
+                     DTOutput("tbl_flags")),
+            tabPanel("Policy Simulator",
+                     br(),
+                     plotOutput("sim_savings_med", height = 340),
+                     DTOutput("tbl_sim_detail")),
+            tabPanel("Top Prescribers (Waste)", br(), DTOutput("tbl_top_prescribers"))
+          )
+      )
+  ),
+  
+  # -------- Contact (anchor target: #contact) --------
+  div(id = "contact", class = "section band",
+      h3("Contact"),
+      p("Questions or collaboration? Reach the MedHiVE team:"),
+      tags$ul(class = "contact-list",
+              tags$li(tags$b("Email: "), tags$a(href="mailto:sc2827@cornell.edu","sc2827@cornell.edu")),
+              tags$li(tags$b("GitHub: "), tags$a(href="https://github.com/chatterjee-srinjoy/Control-Freaks-Six-Sigma","github.com/chatterjee-srinjoy/Control-Freaks-Six-Sigma", target="_blank"))
+      )
   )
 )
 
@@ -248,15 +348,14 @@ server <- function(input, output, session) {
     req(nrow(ts) > 1)
     lim <- in_control_limits(ts$waste_cost)
     ggplot(ts, aes(week, waste_cost)) +
-      geom_line(linewidth = 1, color = bee_black) +
-      {if (isTRUE(input$show_points)) geom_point(size = 2, color = bee_yellow)} +
-      geom_hline(yintercept = lim$center, linetype = "dashed", color = bee_blue) +
+      geom_line(linewidth = 1, color = med_nav_blue) +
+      {if (isTRUE(input$show_points)) geom_point(size = 2, color = med_blue)} +
+      geom_hline(yintercept = lim$center, linetype = "dashed", color = med_blue) +
       geom_hline(yintercept = lim$ucl, color = "red3", linetype = "dotted") +
       geom_hline(yintercept = lim$lcl, color = "red3", linetype = "dotted") +
       scale_y_continuous(labels = dollar_format()) +
-      labs(x = "week", y = "waste cost (USD)",
-           title = "Weekly waste with 3σ limits") +
-      bee_theme_plot()
+      labs(x = "week", y = "waste cost (USD)", title = "Weekly waste with 3\u03C3 limits") +
+      med_theme_plot()
   })
   
   # Causes
@@ -267,11 +366,11 @@ server <- function(input, output, session) {
       summarise(waste_cost = sum(waste_cost, na.rm = TRUE), .groups = "drop")
     ggplot(pdat, aes(x = reorder(medication, -waste_cost), y = waste_cost, fill = waste_reason)) +
       geom_col() +
-      scale_fill_manual(values = bee_fill_pal, name = "reason") +
+      scale_fill_manual(values = med_reason_pal, name = "reason") +
       coord_flip() +
       scale_y_continuous(labels = dollar_format()) +
       labs(x = "medication", y = "waste cost", title = "Waste by reason — medication") +
-      bee_theme_plot()
+      med_theme_plot()
   })
   output$cause_stack_doc <- renderPlot({
     req(filtered())
@@ -280,11 +379,11 @@ server <- function(input, output, session) {
       summarise(waste_cost = sum(waste_cost, na.rm = TRUE), .groups = "drop")
     ggplot(pdat, aes(x = reorder(prescriber, -waste_cost), y = waste_cost, fill = waste_reason)) +
       geom_col() +
-      scale_fill_manual(values = bee_fill_pal, name = "reason") +
+      scale_fill_manual(values = med_reason_pal, name = "reason") +
       coord_flip() +
       scale_y_continuous(labels = dollar_format()) +
       labs(x = "prescriber", y = "waste cost", title = "Waste by reason — prescriber") +
-      bee_theme_plot()
+      med_theme_plot()
   })
   
   # Pareto
@@ -296,14 +395,14 @@ server <- function(input, output, session) {
       arrange(desc(waste_cost)) %>%
       mutate(cum_share = cumsum(waste_cost)/sum(waste_cost))
     ggplot(pdat, aes(reorder(medication, waste_cost), waste_cost)) +
-      geom_col(fill = bee_yellow, color = bee_black, linewidth = .2) +
-      geom_line(aes(y = cum_share * max(waste_cost), group = 1), color = bee_black) +
-      geom_point(aes(y = cum_share * max(waste_cost)), color = bee_black) +
+      geom_col(fill = med_accent_y, color = med_nav_blue, linewidth = .2) +
+      geom_line(aes(y = cum_share * max(waste_cost), group = 1), color = med_nav_blue) +
+      geom_point(aes(y = cum_share * max(waste_cost)), color = med_nav_blue) +
       coord_flip() +
       scale_y_continuous(labels = dollar_format(),
                          sec.axis = sec_axis(~ . / max(pdat$waste_cost), labels = percent)) +
       labs(x = "medication", y = "waste cost", title = "Pareto — medication") +
-      bee_theme_plot()
+      med_theme_plot()
   })
   output$pareto_doc <- renderPlot({
     req(filtered())
@@ -313,14 +412,14 @@ server <- function(input, output, session) {
       arrange(desc(waste_cost)) %>%
       mutate(cum_share = cumsum(waste_cost)/sum(waste_cost))
     ggplot(pdat, aes(reorder(prescriber, waste_cost), waste_cost)) +
-      geom_col(fill = bee_yellow, color = bee_black, linewidth = .2) +
-      geom_line(aes(y = cum_share * max(waste_cost), group = 1), color = bee_black) +
-      geom_point(aes(y = cum_share * max(waste_cost)), color = bee_black) +
+      geom_col(fill = med_accent_y, color = med_nav_blue, linewidth = .2) +
+      geom_line(aes(y = cum_share * max(waste_cost), group = 1), color = med_nav_blue) +
+      geom_point(aes(y = cum_share * max(waste_cost)), color = med_nav_blue) +
       coord_flip() +
       scale_y_continuous(labels = dollar_format(),
                          sec.axis = sec_axis(~ . / max(pdat$waste_cost), labels = percent)) +
       labs(x = "prescriber", y = "waste cost", title = "Pareto — prescriber") +
-      bee_theme_plot()
+      med_theme_plot()
   })
   
   # Distributions
@@ -328,22 +427,22 @@ server <- function(input, output, session) {
     req(filtered())
     ggplot(filtered(), aes(percent_wasted)) +
       geom_histogram(bins = 20, boundary = 0, closed = "left",
-                     fill = bee_yellow, color = bee_black) +
+                     fill = med_accent_y, color = med_nav_blue) +
       scale_x_continuous(labels = function(x) paste0(x, "%")) +
       labs(x = "percent wasted", y = "count", title = "Distribution of percent wasted") +
-      bee_theme_plot()
+      med_theme_plot()
   })
   output$hist_cost <- renderPlot({
     req(filtered())
     ggplot(filtered(), aes(waste_cost)) +
       geom_histogram(bins = 20, boundary = 0, closed = "left",
-                     fill = honey_gold, color = bee_black) +
+                     fill = med_blue, color = med_nav_blue) +
       scale_x_continuous(labels = dollar_format()) +
       labs(x = "waste cost (USD)", y = "count", title = "Distribution of waste cost") +
-      bee_theme_plot()
+      med_theme_plot()
   })
   
-  # Operational Alerts (flags)
+  # Operational Alerts
   flags_tbl <- reactive({
     req(filtered())
     df <- filtered()
@@ -402,7 +501,7 @@ server <- function(input, output, session) {
     datatable(dat, options = list(pageLength = 12, scrollX = TRUE))
   })
   
-  # Policy Simulator (shorter first fill)
+  # Policy Simulator
   sim_detail <- reactive({
     req(filtered())
     frac <- input$first_fill_frac
@@ -425,12 +524,12 @@ server <- function(input, output, session) {
       arrange(desc(savings)) %>%
       slice_head(n = 12)
     ggplot(agg, aes(reorder(medication, savings), savings)) +
-      geom_col(fill = nectar, color = bee_black) +
+      geom_col(fill = med_accent_y, color = med_nav_blue) +
       coord_flip() +
       scale_y_continuous(labels = dollar_format()) +
       labs(x = "medication", y = "estimated savings",
-           title = paste0("Estimated savings by medication (first-fill ×", input$first_fill_frac, ")")) +
-      bee_theme_plot()
+           title = paste0("Estimated savings by medication (first-fill \u00D7 ", input$first_fill_frac, ")")) +
+      med_theme_plot()
   })
   output$tbl_sim_detail <- renderDT({
     req(sim_detail(), nrow(sim_detail()) > 0)
@@ -443,7 +542,7 @@ server <- function(input, output, session) {
     datatable(dat, options = list(pageLength = 12, scrollX = TRUE))
   })
   
-  # Top Prescribers (aggregated)
+  # Top Prescribers
   output$tbl_top_prescribers <- renderDT({
     req(filtered())
     dat <- filtered() %>%
@@ -464,7 +563,7 @@ server <- function(input, output, session) {
     datatable(dat, options = list(pageLength = 15, scrollX = TRUE))
   })
   
-  # download
+  # Download
   output$dl_filtered <- downloadHandler(
     filename = function() paste0("medhive_filtered_", Sys.Date(), ".csv"),
     content = function(file) { readr::write_csv(filtered(), file) }
