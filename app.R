@@ -213,22 +213,25 @@ ui <- page_fluid(
           div(class = "feat-card",
               tags$img(src = "icons/analytics.png", height = "40px", style = "margin-bottom:10px;"),
               h4(class = "gold","Smart Analytics"),
-              p("Interactive Pareto charts, time trends, and dashboards identify where medication waste occurs most often.")
+              p("MedHive makes medication waste visible. With interactive time-series trends, Pareto analyses, and distribution charts, users can filter by medication, prescriber, or facility to identify high-impact areas and target interventions for maximum effectiveness.")
           ),
           div(class = "feat-card",
               tags$img(src = "icons/alert.png", height = "40px", style = "margin-bottom:10px;"),
               h4(class = "gold","Operational Alerts"),
-              p("Flags preventable waste causes such as duplicate prescriptions and unused stock for faster response.")
+              p("Operational Alerts
+Stay one step ahead with real-time alerts that instantly flag preventable waste - from refills after discharge to duplicate prescriptions and unused therapy stock. MedHive empowers your team to act fast, cut costs, and keep your system waste-free.")
           ),
           div(class = "feat-card",
               tags$img(src = "icons/simulator.png", height = "40px", style = "margin-bottom:10px;"),
-              h4(class = "gold","Policy Simulation Engine"),
-              p("Test different supply policies and estimate potential cost savings before real-world implementation.")
+              h4(class = "gold","First-Fill Fraction"),
+              p("First-Fill Fraction
+MedHive’s built-in Policy Simulator puts the power of prediction in your hands. Model first-fill or shorter-supply policies and instantly see the potential waste and cost reductions, allowing your team to test strategies before implementing real-world changes.")
           ),
           div(class = "feat-card",
               tags$img(src = "icons/insights.png", height = "40px", style = "margin-bottom:10px;"),
               h4(class = "gold","Quality Insights"),
-              p("Six Sigma control checks detect unusual waste patterns for targeted administrative action.")
+              p("Quality Insights
+Bring precision to every prescription. MedHive’s Six Sigma-driven control system (SPC) continuously monitors for waste irregularities, giving healthcare teams the power to catch inefficiencies early and keep operations running at peak performance.")
           )
       )
   ),
