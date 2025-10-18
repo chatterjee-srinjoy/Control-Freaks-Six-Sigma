@@ -1,4 +1,4 @@
-![Team Wombmates](banner(1).png)
+![Team Wombmates](medhive.png)
 **Category:** Health Systems (Prompt 4)
 
 ---
@@ -25,20 +25,14 @@ Here’s a quick look at the **MedHive Dashboard** in action:
 - **Charts:** Pareto, distributions, and SPC-style time series  
 - **Breakdowns:** By medication and prescriber  
 - **Operational alerts:** Flags preventable or process-related waste  
-- **Policy simulator:** Estimates savings from shorter first fills  
+- **Fill-in Traction:** Estimates savings from shorter first fills  
 - **Ready to demo:** Works with included synthetic datasets
 
 ---
 
 ## 📦 Files
 
-| File | Description |
-|------|-------------|
-| `app.R` | Shiny dashboard (main file to run). |
-| `CODEBOOK.md` | Variables, units, and dataset descriptions. |
-| `medhive_facility_A_waste.csv` | High-waste facility dataset. |
-| `medhive_facility_B_waste.csv` | Low-waste facility dataset. |
-| `medhive_facility_C_waste.csv` | Balanced facility dataset. |
+c
 
 ---
 
@@ -138,7 +132,23 @@ All code is contained in `app.R` and runs fully in RStudio or Posit Cloud.
 | `show_points` | Toggle control chart points | Checkbox | TRUE |
 
 ---
+## 📂 Datasets
 
+Our project uses three datasets representing different levels of medication waste across healthcare facilities:
+
+| File | Description |
+|------|-------------|
+| `medhive_facility_A_waste.csv` | **High-waste facility:** This facility tends to discard a large volume of medications due to overstocking, expiry, or unused doses. |
+| `medhive_facility_B_waste.csv` | **Low-waste facility:** This facility manages medications efficiently, resulting in minimal waste. |
+| `medhive_facility_C_waste.csv` | **Balanced facility:** Waste levels are moderate, between high- and low-waste facilities. |
+
+### What “High Waste” and “Low Waste” Mean
+
+- **High Waste:** Large amounts of medication are discarded, indicating potential inefficiencies in ordering, storage, or administration.  
+- **Low Waste:** Minimal medication is discarded, reflecting efficient inventory management and usage practices.  
+- **Balanced Waste:** Moderate waste levels, useful as a benchmark between the extremes.
+
+These datasets are used in the **MedHiVE dashboard** to analyze patterns of medication waste and help facilities identify areas for improvement.
 ### Outputs and Visualizations
 
 | Tab | Description | Type |
@@ -159,14 +169,14 @@ See **[`CODEBOOK.md`](./CODEBOOK.md)** for:
 - Full variable dictionary with units and definitions  
 
 > All weights (`initial_weight`, `weight_at_stop`) are in **grams (g)**.  
-> All costs (`cost_usd`) are in **USD ($)**.
+> All costs (`cost_usd`) are in *USD ($)*.
 
 ---
 
 ## 🧾 License & Attribution
 
 - Synthetic data for educational demonstration  
-- © 2025 **Team MedHive**, Cornell Systems Engineering M.Eng.  
+- © 2025 **Team Control Freaks**, Cornell Systems Engineering M.Eng.  
 - Licensed under **CC BY 4.0**
 
 ---
