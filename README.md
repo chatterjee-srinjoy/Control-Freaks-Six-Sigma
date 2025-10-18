@@ -1,4 +1,4 @@
-![Team Wombmates](medhive.png)
+![Team Control Freaks](medhive.png)
 **Category:** Health Systems (Prompt 4)
 
 ---
