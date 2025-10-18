@@ -142,12 +142,6 @@ Our project uses three datasets representing different levels of medication wast
 | `medhive_facility_B_waste.csv` | **Low-waste facility:** This facility manages medications efficiently, resulting in minimal waste. |
 | `medhive_facility_C_waste.csv` | **Balanced facility:** Waste levels are moderate, between high- and low-waste facilities. |
 
-### What “High Waste” and “Low Waste” Mean
-
-- **High Waste:** Large amounts of medication are discarded, indicating potential inefficiencies in ordering, storage, or administration.  
-- **Low Waste:** Minimal medication is discarded, reflecting efficient inventory management and usage practices.  
-- **Balanced Waste:** Moderate waste levels, useful as a benchmark between the extremes.
-
 These datasets are used in the **MedHiVE dashboard** to analyze patterns of medication waste and help facilities identify areas for improvement.
 ### Outputs and Visualizations
 
