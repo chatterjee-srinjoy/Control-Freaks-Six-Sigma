@@ -16,7 +16,7 @@ It helps staff identify preventable causes, visualize trends across medications 
 ## ⚙️ Features
 
 - **Charts:** Pareto, distributions, and SPC-style time series  
-- **Cause breakdowns:** By medication, prescriber, and waste reason  
+- **Breakdowns:** By medication and prescriber  
 - **Operational alerts:** Flags preventable or process-related waste  
 - **Policy simulator:** Estimates savings from shorter first fills  
 - **Ready to demo:** Works with included synthetic datasets
@@ -77,9 +77,71 @@ shiny::runApp("app.R")
 ## 📊 Example Insights
 
 - **Top Prescribers (Waste):** Shows clinicians with highest preventable waste cost  
-- **Operational Alerts:** Flags causes like refills after death or transfer-related waste  
+- **Operational Alerts:** Flags causes like refills after patient transfer or end-of-therapy  
 - **Pareto Chart:** Highlights medications contributing most to total waste  
 - **Policy Simulator:** Models savings from reducing first-fill fractions
+
+---
+
+## 🧰 Tool Documentation & Function Reference
+
+### Overview
+
+The **MedHive Dashboard** is a reproducible R Shiny tool that imports CSV datasets, calculates waste metrics, and generates actionable insights for nursing home administrators.  
+All code is contained in `app.R` and runs fully in RStudio or Posit Cloud.
+
+---
+
+### Workflow
+
+1. Upload or auto-load facility CSVs from `/data/`  
+2. The tool:
+   - Cleans and merges data  
+   - Calculates derived variables (`unit_cost`, `waste_cost`, etc.)  
+   - Applies user filters (date, medication, prescriber)
+3. Generates:
+   - Time-series plots of weekly waste  
+   - Pareto and distribution charts  
+   - Operational alerts and savings simulations
+
+---
+
+### Functions and Parameters
+
+| Function | Location | Purpose | Key Inputs / Parameters | Outputs |
+|-----------|-----------|----------|--------------------------|----------|
+| `read_one_csv(path, label = NULL)` | `app.R` | Reads and cleans each dataset | `path`: CSV path; `label`: facility name | Cleaned data frame with derived fields |
+| `in_control_limits(x)` | `app.R` | Calculates SPC control limits (mean ± 3σ) | Numeric vector `x` | Tibble with `center`, `ucl`, `lcl`, `sigma` |
+| `flags_tbl()` | Server reactive | Identifies operational issues and improvement opportunities | Uses filtered dashboard data | Table of alert messages and estimated savings |
+| `sim_detail()` | Server reactive | Simulates waste reduction from first-fill fraction changes | `input$first_fill_frac` (slider) | Simulated savings by medication |
+| `bee_theme_plot()` | `app.R` | Applies consistent styling to all ggplot charts | none | ggplot2 theme object |
+| `filtered()` | Server reactive | Filters the dataset based on user input | `input$date`, `input$meds`, `input$docs` | Filtered tibble for visualizations |
+
+---
+
+### User Inputs
+
+| Input | Description | Type | Default |
+|--------|--------------|------|----------|
+| `files` | CSV uploads | File input | Required |
+| `date` | Filter by scheduled date range | Date range | 2025-08-01 → 2025-10-31 |
+| `meds` | Filter by medication | Selectize multi | All |
+| `docs` | Filter by prescriber | Selectize multi | All |
+| `first_fill_frac` | Policy simulator slider | Numeric (0.25–1.0) | 0.5 |
+| `show_points` | Toggle control chart points | Checkbox | TRUE |
+
+---
+
+### Outputs and Visualizations
+
+| Tab | Description | Type |
+|------|-------------|------|
+| **Time Series** | SPC-style chart of weekly waste cost with ±3σ limits | Line plot |
+| **Pareto** | 80/20 visualization of highest-impact meds/prescribers | Dual-axis Pareto chart |
+| **Distributions** | Histograms of % wasted and waste cost | Histogram |
+| **Operational Alerts** | Data table of process-improvement suggestions | DT::datatable |
+| **Policy Simulator** | Modeled savings based on shorter first fills | Plot + data table |
+| **Top Prescribers (Waste)** | Summary of preventable waste by clinician | Data table |
 
 ---
 
@@ -87,7 +149,7 @@ shiny::runApp("app.R")
 
 See **[`CODEBOOK.md`](./CODEBOOK.md)** for:
 - Dataset descriptions for Facilities A, B, and C  
-- Full variable dictionary with units and controlled vocabularies  
+- Full variable dictionary with units and definitions  
 
 > All weights (`initial_weight`, `weight_at_stop`) are in **grams (g)**.  
 > All costs (`cost_usd`) are in **USD ($)**.
