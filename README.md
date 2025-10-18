@@ -13,6 +13,16 @@ It helps staff identify preventable causes, visualize trends across medications 
 
 ---
 
+## 🎥 Demo
+
+Here’s a quick look at the **MedHive Dashboard** in action:
+
+![MedHive Dashboard Demo](assets/medhive_demo.gif)
+
+> *A short animated demo showing data upload, filtering, Pareto visualization, and simulated savings.*
+
+---
+
 ## ⚙️ Features
 
 - **Charts:** Pareto, distributions, and SPC-style time series  
