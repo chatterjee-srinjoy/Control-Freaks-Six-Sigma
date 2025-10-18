@@ -32,7 +32,13 @@ Here’s a quick look at the **MedHive Dashboard** in action:
 
 ## 📦 Files
 
-c
+| File | Description |
+|------|-------------|
+| `app.R` | Shiny dashboard (main file to run). |
+| `CODEBOOK.md` | Variables, units, and dataset descriptions. |
+| `medhive_facility_A_waste.csv` | High-waste facility dataset. |
+| `medhive_facility_B_waste.csv` | Low-waste facility dataset. |
+| `medhive_facility_C_waste.csv` | Balanced facility dataset. |
 
 ---
 
