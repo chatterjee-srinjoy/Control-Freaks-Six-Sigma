@@ -9,9 +9,9 @@ All CSV files share the same structure and variables.
 
 | File | Description |
 |------|--------------|
-| `medhive_facility_A_waste_with_reason.csv` | Facility with **high waste** rates (frequent transfers and medication changes). |
-| `medhive_facility_B_waste_with_reason.csv` | Facility with **low waste** rates (more stable chronic therapies). |
-| `medhive_facility_C_waste_with_reason.csv` | Facility with **balanced** waste and more end-of-life cases. |
+| `medhive_facility_A_waste.csv` | Facility with **high waste** rates (frequent transfers and medication changes). |
+| `medhive_facility_B_waste.csv` | Facility with **low waste** rates (more stable chronic therapies). |
+| `medhive_facility_C_waste.csv` | Facility with **balanced** waste and more end-of-life cases. |
 
 Each file can be analyzed independently or together in the **MedHive Dashboard**.
 
