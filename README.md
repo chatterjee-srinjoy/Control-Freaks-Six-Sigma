@@ -1,7 +1,4 @@
-# 🐝 MedHive: Nursing Home Medication Waste Dashboard
-
-**Team:** MedHive  
-**Event:** Cornell Six Sigma Hackathon 2025  
+![Team Wombmates](banner(1).png)
 **Category:** Health Systems (Prompt 4)
 
 ---
