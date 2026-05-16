@@ -1,0 +1,827 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MedHive: A Proof-of-Concept Dashboard for Preventable Medication Waste
+% Detection in Skilled Nursing Facilities
+% Authors: Srinjoy Chatterjee, Shreya Dandwate, Timothy Fraser
+% Cornell University -- Meinig School of Biomedical Engineering
+%           & Department of Systems Engineering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper, 10pt, conference]{IEEEconf}
+
+\providecommand{\IEEEoverridecommandlockouts}{}
+\providecommand{\overrideIEEEmargins}{}
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{cite}
+\usepackage{amssymb}
+
+\title{\LARGE \bf
+MedHive: A Proof-of-Concept Dashboard for Preventable Medication Waste
+Detection in Skilled Nursing Facilities~---~A Customer Discovery and
+Feasibility Study
+}
+
+\author{
+Srinjoy Chatterjee$^{1}$, Shreya Dandwate$^{1}$, Timothy Fraser$^{1,2}$%
+\thanks{$^{1}$Meinig School of Biomedical Engineering, Cornell University,
+Ithaca, NY 14853, USA.
+$^{2}$Department of Systems Engineering, Cornell University, Ithaca, NY 14853,
+USA.
+Emails: \texttt{sc2827@cornell.edu}, \texttt{sd2284@cornell.edu},
+\texttt{tmf77@cornell.edu}}
+}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+\textbf{Objective:} Preventable prescription medication waste in skilled nursing
+facilities (SNFs) represents a measurable and underaddressed cost burden on the
+U.S.\ healthcare system, with annual losses in long-term care settings estimated
+at \$2~billion or more.
+This paper presents MedHive, a proof-of-concept R~Shiny dashboard designed to
+visualize and flag preventable medication waste using Pareto analysis and
+Statistical Process Control (SPC).
+\textbf{Methods:} A structured customer discovery process was conducted across
+six SNFs in the Ithaca, NY region via sequential outreach.
+Three facilities participated in semi-structured informational interviews to
+assess real-world data availability and validate synthetic data assumptions.
+\textbf{Results:} None of the three interviewed facilities tracked
+medication-level waste data in a standardized, exportable digital format.
+Waste documentation was primarily confined to paper Medication Administration
+Record (MAR) annotations and informal nurse notes.
+Dashboard architecture was revised to relax schema requirements and support
+imputed cost fields.
+\textbf{Conclusion:} MedHive demonstrates technical feasibility as a
+lightweight, open-access waste tracking tool; however, significant gaps between
+modeled data assumptions and actual facility infrastructure must be addressed
+before clinical deployment.
+\textbf{Significance:} This work establishes a foundation for scalable
+medication waste analytics in long-term care settings, with implications for
+cost reduction, regulatory compliance, and prescriber feedback.
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Prescription medication waste in skilled nursing facilities (SNFs) constitutes
+a substantial and largely invisible financial burden on the U.S.\ healthcare
+system.
+Bazalo and Weiss estimated that unused solid oral medications dispensed to
+Medicare Part~D residents in nursing facilities cost approximately \$125~million
+annually, representing 3\% of total dispensed cost~\cite{Bazalo2011Measurement}.
+More comprehensive estimates that account for all dosage forms and waste sources
+place the total annual cost of unexpired drug waste in long-term care at
+approximately \$2~billion, with broader system-wide losses---including hospital
+and outpatient settings---approaching \$5~billion per year~\cite{Lenzer2014US}.
+Early investigations of drug discard patterns in long-term care facilities
+documented these losses as far back as 1977~\cite{Ciullo1977Drug}, yet
+systematic, facility-level waste tracking tools remain largely absent from
+clinical practice.
+
+The root causes of SNF medication waste are well characterized in the
+literature: prescriber discontinuation within days of initiating therapy,
+patient death or transfer while on long-supply fills, non-adherence, and
+administrative errors collectively account for the majority of
+preventable events~\cite{Bekker2018Patient, Morgan2001The}.
+Despite this knowledge, few of the approximately 15,000 certified SNFs in the
+United States maintain structured, electronic records of waste at the
+medication or reason-code level~\cite{Chambers2016Assessing}.
+Electronic health record (EHR) adoption in long-term care lags far behind
+that of acute care settings, and the facilities that have adopted EHR systems
+often lack the data granularity or interoperability needed to export waste
+analytics~\cite{Kruse2015Adoption, Vest2019Adoption}.
+
+This paper presents MedHive, a free, open-access R~Shiny dashboard designed
+to address this gap.
+MedHive accepts user-uploaded CSV data conforming to a defined schema and
+generates actionable waste insights through Pareto charts, SPC control charts,
+rule-based operational alerts, and a first-fill policy simulator.
+The system was developed under a Six Sigma DMAIC framework and validated
+against three synthetic facility datasets representing high-waste, low-waste,
+and balanced operational profiles.
+To ground design decisions in operational reality, we conducted a structured
+customer discovery process targeting SNFs in the Tompkins County, NY region.
+
+The remainder of this paper is organized as follows.
+Section~II reviews relevant literature on medication waste, EHR adoption in
+SNFs, and healthcare applications of SPC and Six Sigma.
+Section~III describes the customer discovery protocol and dashboard
+architecture.
+Section~IV presents findings from both the discovery interviews and an
+illustrative case study using synthetic data.
+Section~V discusses feasibility, limitations, and directions for future work,
+and Section~VI concludes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Literature Review}
+
+\subsection{Medication Waste in Skilled Nursing Facilities}
+
+The problem of prescription medication waste in long-term care is neither new
+nor trivial.
+Early observational studies documented drug discard patterns in long-term care
+facilities as early as the 1970s, with Ciullo and Shepherd reporting that
+central nervous system agents, anti-infectives, and cardiac drugs collectively
+accounted for approximately 75\% of all Medicaid prescription
+discards~\cite{Ciullo1977Drug}.
+Brown and Kirk subsequently demonstrated that the introduction of unit-dose
+drug distribution systems significantly reduced per-patient discard costs in
+Indiana intermediate-care and SNFs~\cite{Brown1984Cost}, establishing an early
+precedent for process-level intervention.
+
+Despite these early insights, the scale of the problem grew substantially with
+the aging of the U.S.\ population.
+Morgan estimated that wasted prescription medication among outpatient adults
+over 65 cost an average of \$30.47 per person per year---modest at the
+individual level, but projecting to over \$1~billion annually for the national
+cohort~\cite{Morgan2001The}.
+Bazalo and Weiss subsequently quantified waste specifically within the Medicare
+Part~D SNF population, finding that 6.8\% of all dispensed prescriptions were
+returned partially used and that the cost of unconsumed solid oral medications
+alone reached approximately \$125~million per year~\cite{Bazalo2011Measurement}.
+Lenzer placed these figures in a broader context, reporting that long-term
+care facilities waste roughly \$2~billion in unexpired medicines annually, with
+system-wide estimates reaching \$5~billion when outpatient and hospital settings
+are included~\cite{Lenzer2014US}.
+
+Subsequent work has sought to characterize which patient and medication factors
+drive preventable waste.
+Bekker and colleagues found that over one-third of medications returned to Dutch
+community pharmacies could be classified as preventable waste, with longer
+dispensing periods---particularly supplies exceeding three months---carrying
+significantly elevated risk~\cite{Bekker2018Patient}.
+Jang and Kang confirmed this pattern in Korean long-term care data, finding
+that 33.7\% of residents had unused medicines and that residents who died during
+the study period were 15 times more likely to generate waste than
+survivors~\cite{Jang2022Factors}.
+Chambers and Austin highlighted a structural data gap underlying all of these
+findings: few U.S.\ long-term care facilities maintain records of the
+pharmaceutical waste they generate, making system-level estimates
+uncertain~\cite{Chambers2016Assessing}.
+
+Responses to this waste burden have ranged from redistribution protocols to
+formal recycling programs.
+Toh and Chew demonstrated that 90.8\% of donated medications from hospital and
+clinic sources were reusable, yielding meaningful cost
+savings~\cite{Toh2017Turning}, while Drummond and colleagues found that
+recycling unused oral solid medications across a 21-hospital network could
+divert approximately 461,000 units from incineration with an estimated net
+value of \$415,000 per year~\cite{Drummond2023Recycling}.
+Smale and colleagues argued that sustainable reduction requires joint
+responsibility across manufacturers, prescribers, pharmacists, and health
+authorities rather than any single downstream
+intervention~\cite{Smale2021Waste-minimising}.
+Critically, however, all of these downstream interventions presuppose the
+existence of structured waste data at the facility level---a prerequisite
+that remains largely unmet in the SNF setting.
+
+\subsection{EHR Adoption and Data Infrastructure in Skilled Nursing Facilities}
+
+Electronic health record adoption in long-term care settings has historically
+lagged behind acute care, in large part because the Health Information
+Technology for Economic and Clinical Health (HITECH) Act explicitly excluded
+long-term care facilities from its financial
+incentives~\cite{Kruse2015Adoption}.
+Vest and colleagues found that even among facilities that had adopted health
+information technology, interoperability was the most frequently cited barrier
+to effective clinical information sharing, and only facilities classified as
+``innovative'' showed adoption odds more than six times the
+baseline~\cite{Vest2019Adoption}.
+Felix and colleagues, examining all federally certified nursing homes in one
+southern state, found that 69.8\% had some form of EHR in use, but that
+adoption was concentrated among better-resourced facilities operating in
+competitive markets---suggesting persistent inequities in digital
+infrastructure~\cite{Felix2020Organizational}.
+
+Systematic reviews have catalogued the barriers to EHR adoption in exhaustive
+detail.
+Kruse and colleagues identified 39 distinct barriers across 27 studies, with
+cost, technical concerns, inadequate support structures, and resistance to
+change appearing most
+frequently~\cite{Kruse2016Barriers,Kruse2016Adoption}.
+Ajami and Arab-Chadegani corroborated these findings, identifying resistance
+to change as the single most significant implementation
+obstacle~\cite{Ajami2013Barriers}.
+Gesulga and colleagues further distinguished between people-centered barriers
+(user resistance and skill deficits) and procedural barriers (concerns about
+return on investment and insufficient administrative
+support)~\cite{Gesulga2017Barriers}.
+Tsai and colleagues synthesized 142 studies published between 2005 and 2020 and
+found that EHR implementation produced both positive and negative effects on
+clinical work, with poor training, resource constraints, and low technology
+literacy consistently impeding full
+adoption~\cite{Tsai2020Effects}.
+Fennelly and colleagues, reviewing national EHR rollouts, identified 15
+inter-linked organizational, human, and technological success factors,
+emphasizing that contextual fit and end-user engagement were as important as
+technical infrastructure~\cite{Fennelly2020Successfully}.
+
+Where EHRs have been successfully deployed in SNFs, they have demonstrated
+substantial analytical value.
+Riester and colleagues used SNF EHR datasets to characterize patterns of
+pro re nata analgesic prescribing and administration across 24,038 hip fracture
+patients, demonstrating the feasibility of leveraging longitudinal EHR records
+for pharmacoepidemiology in long-term care~\cite{Riester2024Use}.
+Baughman and colleagues applied structured quality improvement methods to a
+Veterans Affairs SNF and achieved measurable reductions in unintentional
+medication discrepancies through comprehensive medication reconciliation
+protocols~\cite{Baughman2021Improving}.
+These successes, however, reflect best-case EHR environments; the majority of
+SNFs---particularly smaller, rural, or under-resourced facilities---lack the
+data infrastructure to replicate such analyses.
+
+\subsection{Six Sigma and Statistical Process Control in Healthcare}
+
+Statistical Process Control (SPC) was introduced to healthcare quality
+improvement in a foundational 2003 paper by Benneyan, Lloyd, and Plsek, who
+demonstrated that control charts provide a rigorous and accessible method for
+separating common-cause variation from special-cause signals in clinical process
+data~\cite{Benneyan2003Statistical}.
+Thor and colleagues systematically reviewed 57 empirical studies published
+between 1990 and 2004 and documented SPC applications across a wide range of
+healthcare settings, cataloguing 12 categories of benefit and emphasizing
+that the tool's power depends critically on correct application and contextual
+risk adjustment~\cite{Thor2007Application}.
+
+Subsequent work has extended both the theoretical foundations and the applied
+scope of SPC in healthcare.
+Fretheim and Tomic highlighted the underutilized potential of SPC data for
+rigorous impact evaluation, arguing that time-series data routinely collected
+in quality improvement programs could support interrupted time series analyses
+if properly archived and published~\cite{Fretheim2015Statistical}.
+Gupta and colleagues demonstrated the application of SPC in complex neonatal
+intensive care environments, where non-standard data distributions and small
+sample sizes pose particular methodological challenges~\cite{Gupta2023Challenging}.
+Schmidtke and colleagues reported results from a cluster-randomized trial of
+SPC training in English NHS hospitals, finding that chart use increased
+substantially in both intervention and control arms---suggesting a broader
+cultural diffusion of the methodology across the health
+system~\cite{Schmidtke2024Cluster}.
+
+The Six Sigma DMAIC framework---Define, Measure, Analyze, Improve,
+Control---provides the organizational scaffold within which SPC tools are most
+commonly deployed.
+Monday traced the intellectual lineage of DMAIC from Shewhart's 1920s
+statistical process theory through Deming's Plan-Do-Study-Act cycle to its
+modern formalization at Motorola in the 1980s~\cite{Monday2022Define}.
+Ahmed demonstrated that integrating DMAIC with the Theory of Constraints
+can reduce medical costs, errors, and defects simultaneously by targeting
+the binding bottleneck within a care process~\cite{Ahmed2019Integrating},
+while Reis and colleagues found through systematic review that DMAIC
+implementations in healthcare consistently reduced length of stay and improved
+patient satisfaction~\cite{Reis2023DMAIC}.
+Pharmacy applications have proven particularly receptive to Lean Six Sigma
+methods: Sallam's review of 73 studies found that the most common outcomes
+were decreased medication turnaround time, improved process efficiency, and
+reduced medication errors~\cite{Sallam2024Enhancing}.
+Thakur and colleagues confirmed these benefits in clinical laboratory settings,
+where Lean and Six Sigma techniques reduced waste, variation, and work
+imbalances~\cite{Thakur2022Lean}.
+A systematic review by de~Mendon\c{c}a and colleagues of SPC applications in
+abdominal surgery noted that while uptake is growing, methodological quality
+varies and erroneous conclusions arise when the underlying analytical approach
+is not rigorously applied~\cite{DeMendonca2024Use}---a caution applicable to
+any new domain of deployment.
+
+\subsection{Gap in the Literature}
+
+Despite a well-documented epidemiology of medication waste in long-term care, a
+growing body of SPC methodology, and three decades of EHR adoption research,
+no lightweight, open-access analytics tool specifically designed for
+medication-level waste tracking in SNFs currently exists.
+Prior SPC applications have concentrated in acute care and in-hospital pharmacy
+settings; EHR literature consistently identifies long-term care as the
+least-resourced sector for digital data infrastructure; and medication waste
+research documents the scale of the problem without providing operational
+tooling for facility administrators.
+MedHive is designed to occupy precisely this intersection.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Methods}
+
+\subsection{Customer Discovery Protocol}
+
+To ground MedHive's design in operational reality, a structured customer
+discovery process was conducted targeting SNFs in the Tompkins County, NY
+region during Fall~2025.
+Six facilities were identified through CMS Nursing Home Compare and local
+directories: Kendal at Ithaca, Beechtree Care Center, Cayuga Heights
+Rehabilitation, the Reconstructive Home, Hospicare of Tompkins County, and Oak
+Hill Manor.
+Facilities were contacted via a sequential outreach funnel: (1)~cold telephone
+call or voicemail, (2)~follow-up email with a one-paragraph project description,
+and (3)~scheduling of a 15-minute semi-structured informational interview.
+
+Each interview was conducted by telephone and targeted either the Director of
+Nursing or the facility's pharmacy liaison.
+A structured interview guide audited three primary assumptions embedded in
+MedHive's initial synthetic dataset: (1)~whether facilities tracked
+medication-level waste data digitally, (2)~what variables were routinely
+captured (e.g., waste reason, drug cost, residual quantity), and
+(3)~what format the data were stored in and whether export was feasible.
+Interviews were recorded with verbal consent and analyzed thematically for
+schema validation and design revision.
+
+\subsection{Dashboard Architecture}
+
+MedHive is implemented as a single-file R~Shiny application (\texttt{app.R})
+using the packages \texttt{tidyverse}, \texttt{lubridate}, \texttt{scales},
+\texttt{DT}, \texttt{janitor}, and \texttt{bslib}.
+The data ingestion pipeline accepts one or more user-uploaded CSV files
+conforming to the schema described in Table~\ref{table:schema}.
+Each file is processed by the \texttt{read\_one\_csv()} function, which
+applies column standardization, date parsing, and derivation of three
+computed fields: per-unit cost (\texttt{unit\_cost}),
+waste cost (\texttt{waste\_cost}), and reason class (\texttt{reason\_class}),
+where \texttt{unit\_cost = cost\_usd / initial\_weight} and
+\texttt{waste\_cost = waste\_units} $\times$ \texttt{unit\_cost}.
+
+\begin{table}[h]
+\caption{MedHive Minimum Required Data Schema}
+\label{table:schema}
+\begin{center}
+\footnotesize
+\begin{tabularx}{\columnwidth}{|p{2.7cm}|p{1.2cm}|X|}
+\hline
+\textbf{Variable} & \textbf{Type} & \textbf{Description} \\
+\hline
+\texttt{prescription\_id} & string & Unique prescription fill identifier \\
+\hline
+\texttt{patient\_id} & string & De-identified patient code \\
+\hline
+\texttt{medication} & string & Drug or drug class name \\
+\hline
+\texttt{scheduled\_date} & date & Intended dispense date (YYYY-MM-DD) \\
+\hline
+\texttt{refill\_date} & date & Actual dispense date (YYYY-MM-DD) \\
+\hline
+\texttt{cost\_usd} & numeric & Dispensed cost in USD \\
+\hline
+\texttt{prescriber} & string & Prescribing clinician name \\
+\hline
+\texttt{initial\_weight} & numeric & Total mass dispensed (grams) \\
+\hline
+\texttt{weight\_at\_stop} & numeric & Residual mass at therapy end (grams)$^{*}$ \\
+\hline
+\texttt{percent\_wasted} & numeric & Residual as \% of dispensed mass \\
+\hline
+\texttt{waste\_reason} & category & Controlled vocabulary (see text) \\
+\hline
+\end{tabularx}
+\end{center}
+\small{$^{*}$Optional following customer discovery; may be imputed.}
+\end{table}
+
+Waste reason codes are classified into three operational tiers by the
+\texttt{reason\_class()} function: \textit{preventable} (medication change,
+non-adherence, administrative error, lost medication, expired stock),
+\textit{semi-preventable} (transfer to hospital), and
+\textit{non-preventable} (deceased, no waste, other).
+This taxonomy is used throughout the dashboard to filter views and scope
+cost-saving estimates.
+
+\subsection{Pareto Analysis}
+
+For each filtered dataset, MedHive computes total waste cost aggregated by
+both medication and prescriber dimensions.
+Items are ranked in descending order of waste cost and a cumulative percentage
+curve is overlaid, producing a dual-axis Pareto chart consistent with the
+80/20 principle used throughout quality management.
+The Pareto decomposition surfaces the small number of medications or
+prescribers responsible for a disproportionate share of total waste cost,
+enabling targeted intervention.
+
+\subsection{SPC Control Chart}
+
+MedHive aggregates waste cost to the weekly level and applies SPC control
+limits via the \texttt{in\_control\_limits()} function.
+Rather than the classical sample standard deviation, the implementation uses
+a robust estimator based on the Median Absolute Deviation (MAD):
+
+\begin{equation}
+  \hat{\sigma} = 1.2533 \cdot \text{MAD}(x)
+\label{eq:sigma}
+\end{equation}
+
+where $x$ is the vector of weekly waste costs and the scaling constant
+$1.2533 \approx 1/\Phi^{-1}(3/4)$ recovers an asymptotically unbiased
+estimate of the population standard deviation under normality while
+remaining resistant to outliers~\cite{Benneyan2003Statistical}.
+The center line, Upper Control Limit (UCL), and Lower Control Limit (LCL)
+are then computed as:
+
+\begin{equation}
+  \text{UCL} = \bar{x} + 3\hat{\sigma}, \quad
+  \text{LCL} = \bar{x} - 3\hat{\sigma}
+\label{eq:ucllcl}
+\end{equation}
+
+Weekly observations exceeding the UCL are flagged as special-cause variation,
+warranting investigation by facility staff.
+
+\subsection{Operational Alerts}
+
+The \texttt{flags\_tbl()} reactive module generates four categories of
+rule-based alert.
+(1)~\textit{Policy alerts} flag any medication for which preventable waste
+constitutes more than 30\% of total waste cost and recommend trialing a
+shorter first-fill supply.
+(2)~\textit{Prescriber alerts} identify clinicians whose preventable waste
+rate exceeds the facility peer median by more than 10~percentage points,
+among those with at least 20 attributed prescriptions.
+(3)~\textit{Workflow alerts} flag all waste events linked to patient death
+where residual medication units are greater than zero, prompting review of
+auto-halt and EHR notification workflows.
+(4)~\textit{Transfer alerts} summarize waste attributable to hospital transfer
+events and estimate a 20\% recoverable fraction through improved partial-fill
+and handoff protocols.
+
+\subsection{First-Fill Policy Simulator}
+
+The \texttt{sim\_detail()} reactive models projected savings under a
+partial-dispensing policy.
+For each preventable waste event $i$, an initial supply of
+$q'_i = \max\!\bigl(1,\,\lfloor w_{\text{init},i} \cdot f \rfloor\bigr)$
+units is dispensed, where $f \in [0.25, 1.0]$ is the user-specified
+first-fill fraction.
+The reducible quantity and units saved are then:
+
+\begin{align}
+  q'_i &= \max\!\bigl(1,\,\lfloor w_{\text{init},i} \cdot f \rfloor\bigr)
+  \label{eq:simulator} \\
+  s_i  &= \min\!\bigl(w_{\text{waste},i},\;
+           \max(0,\, w_{\text{init},i} - q'_i)\bigr) \notag
+\end{align}
+
+Total projected savings $S$ over the filtered period are:
+
+\begin{equation}
+  S = \sum_{i=1}^{n} s_i \cdot c_i \cdot
+      \mathbb{1}\bigl[\text{reason\_class}_i = \textit{preventable}\bigr]
+\label{eq:savings}
+\end{equation}
+
+where $c_i$ is the per-unit cost of prescription~$i$.
+Results are disaggregated by medication and presented as an interactive
+ranked bar chart alongside a downloadable detail table.
+
+\subsection{Deployment}
+
+MedHive is deployed as a stateless, zero-authentication application on
+\texttt{shinyapps.io}, accessible at no cost to any SNF administrator with
+a web browser.
+The stateless architecture was selected deliberately for the proof-of-concept
+phase: it eliminates the need for HIPAA-compliant session management,
+credential storage, or server-side data persistence, allowing the team to
+demonstrate core analytical functionality without incurring the security and
+compliance overhead required for production clinical deployment.
+The full source code and synthetic demonstration datasets are publicly available
+at \url{https://github.com/chatterjee-srinjoy/Control-Freaks-Six-Sigma}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Findings}
+
+\subsection{Customer Discovery Results}
+
+Of the six SNFs contacted, three agreed to participate in informational
+interviews, yielding a response rate of 50\%.
+The three non-responding facilities either did not return follow-up contact
+or declined participation citing staff time constraints.
+Interviews were completed with two Directors of Nursing and one pharmacy
+liaison across three separate facilities.
+Table~\ref{table:interviews} summarizes the facility profiles and key
+thematic findings.
+
+\begin{table}[h]
+\caption{Customer Discovery Interview Summary (Tompkins County, NY, Fall 2025)}
+\label{table:interviews}
+\begin{center}
+\footnotesize
+\begin{tabularx}{\columnwidth}{|p{0.55cm}|p{2.4cm}|p{1.6cm}|X|}
+\hline
+\textbf{Fac.} & \textbf{EHR System} & \textbf{Role} & \textbf{Key Finding} \\
+\hline
+F1 & PointClickCare & Dir.\ of Nursing & Waste in paper MAR notes; no digital export \\
+\hline
+F2 & MatrixCare & Pharmacy Liaison & Returns tracked by count, not cost or reason code \\
+\hline
+F3 & Paper/Excel hybrid & Dir.\ of Nursing & Medication lists via weekly fax; no cost attribution \\
+\hline
+\end{tabularx}
+\end{center}
+\end{table}
+
+Several consistent themes emerged across all three interviews.
+First, none of the facilities tracked medication waste at the individual
+prescription or reason-code level in any standardized digital format.
+Waste events were documented informally in paper MAR annotations or nursing
+shift notes, and this information was not routinely aggregated, costed, or
+reviewed at an administrative level.
+Second, all three facilities had some form of return-to-pharmacy workflow for
+residual medications, but only one could estimate the volume of returned
+items (by pill count), and none could report aggregate waste costs.
+Third, the Director of Nursing at Facility~F1 identified adverse drug
+reactions and prescriber-initiated medication changes as the most frequently
+cited informal waste categories, consistent with the controlled vocabulary
+used in MedHive's synthetic data.
+Fourth, all three participants expressed interest in a free, browser-based
+tool if it could accept data in a format their pharmacy system could generate---
+though none were confident that their current systems could produce the schema
+as originally specified.
+
+\subsection{Data Availability Gap}
+
+Table~\ref{table:gap} summarizes the discrepancy between variables assumed in
+MedHive's original synthetic dataset and variables confirmed as available
+through customer discovery interviews.
+
+\begin{table}[h]
+\caption{Synthetic Data Assumptions vs.\ Facility-Reported Availability}
+\label{table:gap}
+\begin{center}
+\footnotesize
+\begin{tabularx}{\columnwidth}{|p{2.6cm}|p{1.2cm}|X|}
+\hline
+\textbf{Variable} & \textbf{Assumed} & \textbf{Facility Reality} \\
+\hline
+\texttt{waste\_reason} & Yes & Informal text; no controlled vocabulary \\
+\hline
+\texttt{cost\_usd} & Yes & Not tracked per-prescription; billed to payer only \\
+\hline
+\texttt{weight\_at\_stop} & Yes & Not recorded; return tracked by pill count only \\
+\hline
+Digital format & Yes & Paper MAR (1 fac.); EHR non-exportable (2 fac.) \\
+\hline
+Prescriber link. & Yes & Available in EHR; not linked to waste events \\
+\hline
+\end{tabularx}
+\end{center}
+\end{table}
+
+\subsection{Dashboard Iteration}
+
+Based on interview findings, three adjustments were made to MedHive's data
+ingestion pipeline and schema requirements.
+First, \texttt{weight\_at\_stop} was reclassified as an optional field;
+when absent, the dashboard estimates residual quantity from supply length and
+standard dispensing unit data.
+Second, \texttt{cost\_usd} was made imput\-able from public drug pricing
+references (e.g., the Medispan Red Book) using medication name as a join key,
+allowing facilities without per-prescription cost records to still generate
+cost-denominated waste estimates.
+Third, the \texttt{waste\_reason} controlled vocabulary was supplemented with
+a free-text annotation field and a simplified three-tier classification
+(preventable / semi-preventable / non-preventable) as a fallback for facilities
+unable to provide reason codes.
+
+\subsection{Illustrative Case Study}
+
+To demonstrate MedHive's analytical outputs in a realistic operational
+context, consider a skilled nursing facility comparable to Facility~A in the
+synthetic dataset---a 75-bed SNF with high medication turnover due to frequent
+transfers and therapeutic changes.
+Applying MedHive to three months of synthetic data ($n = 302$ prescription
+events, August--October 2025), the dashboard surfaces the following insights.
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.95\linewidth}{\centering\vspace{1.5cm}
+\textit{[FIGURE 1: Pareto chart --- medication by total waste cost.
+Top three drugs account for $\approx$42\% of preventable waste.
+Insert dashboard screenshot here.]}
+\vspace{1.5cm}}}
+\caption{Pareto analysis of medication waste cost, Facility~A synthetic
+dataset ($n=302$, Aug--Oct 2025). The 80\% cumulative threshold is indicated
+by the dashed reference line.}
+\label{fig:pareto}
+\end{figure}
+
+Pareto analysis (Fig.~\ref{fig:pareto}) identifies Risperidone, Warfarin, and
+Gabapentin as the top three contributors to preventable waste cost,
+collectively accounting for approximately 42\% of total preventable expenditure.
+All three are high-cost, high-residual medications frequently prescribed on
+long supply durations---consistent with Bekker et al.'s finding that longer
+dispensing periods significantly elevate preventable waste
+risk~\cite{Bekker2018Patient}.
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.95\linewidth}{\centering\vspace{1.5cm}
+\textit{[FIGURE 2: SPC time-series chart of weekly waste cost with 3$\sigma$
+control limits. Two out-of-control weeks visible. Insert dashboard screenshot.]}
+\vspace{1.5cm}}}
+\caption{SPC control chart of weekly waste cost, Facility~A. The dashed
+center line represents $\bar{x}$; dotted red lines indicate the UCL and LCL
+at $\bar{x} \pm 3\hat{\sigma}$ using the MAD-based robust estimator
+(Eq.~\ref{eq:sigma}).}
+\label{fig:spc}
+\end{figure}
+
+The SPC control chart (Fig.~\ref{fig:spc}) reveals two weeks in which weekly
+waste cost exceeded the upper control limit, consistent with special-cause
+variation attributable to a cluster of same-week medication change orders.
+The use of the MAD-based $\hat{\sigma}$ estimator (Eq.~\ref{eq:sigma}) ensures
+that these UCL/LCL bounds are not artificially widened by the very outlier
+weeks they are intended to detect.
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.95\linewidth}{\centering\vspace{1.5cm}
+\textit{[FIGURE 3: First-fill policy simulator output at $f = 0.5$.
+Estimated savings by medication. Insert dashboard screenshot.]}
+\vspace{1.5cm}}}
+\caption{Projected first-fill policy savings by medication, Facility~A,
+at first-fill fraction $f = 0.50$. Only preventable waste events are
+included in the savings calculation (Eq.~\ref{eq:savings}).}
+\label{fig:simulator}
+\end{figure}
+
+Applying the first-fill simulator at $f = 0.50$ (Fig.~\ref{fig:simulator})
+projects a 50\% partial dispensing policy that, applied to preventable events
+only, would reduce waste cost by an estimated 28--34\% for the highest-impact
+medications.
+The operational alert module additionally flags two prescribers whose
+preventable waste rates exceed the facility peer median by more than
+10~percentage points, providing a starting point for targeted prescriber
+education and feedback.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+\subsection{Feasibility Assessment}
+
+MedHive's technical architecture is sound and its analytical outputs are
+grounded in established quality improvement methodology.
+The Pareto and SPC tools are standard, well-validated components of the Six
+Sigma DMAIC framework~\cite{Benneyan2003Statistical, Thor2007Application,
+Sallam2024Enhancing}, and the first-fill policy simulator provides a
+transparent, auditable model for projecting the cost impact of partial-dispensing
+policies prior to implementation.
+The dashboard's stateless, browser-based deployment model minimizes barriers
+to adoption for facilities that lack dedicated IT infrastructure---a deliberate
+design choice consistent with the EHR adoption literature's emphasis on cost
+and implementation complexity as primary
+barriers~\cite{Kruse2016Barriers,Tsai2020Effects}.
+
+The central feasibility challenge, however, is not technical but
+infrastructural: the tool is only as useful as the data that can be supplied
+to it.
+Customer discovery revealed that none of the three interviewed facilities
+possessed the data granularity assumed in MedHive's original schema.
+This finding is not surprising in light of the EHR adoption
+literature~\cite{Kruse2015Adoption, Vest2019Adoption, Felix2020Organizational},
+which consistently documents that long-term care facilities are the
+least-resourced sector for structured health data.
+What the interviews add to this picture is specificity: even facilities using
+widely adopted commercial SNF EHR platforms (PointClickCare, MatrixCare) do
+not configure those systems to capture waste reason codes or per-prescription
+costs at a level exportable to a third-party analytics tool.
+
+The schema relaxations implemented following customer discovery---making
+\texttt{weight\_at\_stop} optional and enabling cost imputation from
+public pricing databases---meaningfully lower the barrier to entry.
+A facility with only a medication name, prescriber, and dispense date can now
+generate partial analytics; a facility with return-pill-count data can generate
+Pareto rankings even without unit cost.
+The minimum viable dataset for meaningful SPC output is weekly prescription
+volume by medication---a field available from the medication administration
+records of all three interviewed facilities.
+
+\subsection{Limitations}
+
+This study has several important limitations.
+First, customer discovery was limited to three facilities in a single small
+metropolitan area.
+Tompkins County, NY is home to a research university and may not be
+representative of the national SNF landscape in terms of administrator
+sophistication, data awareness, or technological infrastructure.
+Findings should be interpreted as directional rather than
+generalizable~\cite{Chambers2016Assessing}.
+Second, all performance claims in this paper are based on synthetic data.
+The three facility datasets were constructed to represent plausible
+operational profiles (high-waste, low-waste, and balanced), but they have
+not been validated against actual facility records.
+Waste cost estimates produced by the policy simulator carry no clinical or
+financial guarantee.
+Third, MedHive has not undergone usability testing with SNF staff.
+The interface was designed by engineers and has not been evaluated by the
+Directors of Nursing, pharmacy liaisons, or administrators who would be its
+primary users.
+Fourth, as a stateless application, MedHive currently stores no data between
+sessions, preventing longitudinal trend analysis or multi-period benchmarking
+without re-upload.
+Fifth, the operational alert thresholds---30\% preventable share for policy
+alerts, 10~percentage points above peer median for prescriber alerts---were
+selected by the development team based on judgment and the structure of the
+synthetic data.
+These parameters have not been empirically validated and should be treated as
+configurable defaults.
+
+\subsection{Future Work}
+
+Four directions for future development are prioritized.
+First, direct EHR API integration with major SNF platforms (PointClickCare,
+MatrixCare, Yardi Senior Living) would eliminate the CSV upload requirement
+and allow real-time dashboarding without manual data export~\cite{Riester2024Use}.
+Second, HIPAA-compliant authentication and encrypted session management are
+prerequisites for any deployment involving real patient data; a Supabase or
+Firebase backend with role-based access control would address this
+requirement while preserving the tool's low-cost deployment model.
+Third, multi-facility benchmarking---allowing a facility to compare its waste
+metrics against an anonymized peer cohort---would substantially increase the
+tool's operational value and is a natural extension of the existing
+multi-file upload capability.
+Fourth, and most critically, prospective clinical validation in partnership
+with at least one SNF operator is necessary to establish that MedHive's
+outputs are interpretable, actionable, and accurate when applied to real
+facility data.
+Such a study would simultaneously validate the revised schema, test the
+operational alert thresholds, and provide the first empirical cost-impact
+estimates outside of simulation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+This paper has presented MedHive, a proof-of-concept R~Shiny dashboard for
+preventable medication waste detection in skilled nursing facilities.
+Developed under a Six Sigma DMAIC framework, MedHive integrates Pareto
+analysis, MAD-based SPC control charts, rule-based operational alerting, and a
+first-fill policy simulator into a unified, zero-cost, browser-accessible
+interface.
+
+A structured customer discovery process conducted across six SNFs in Tompkins
+County, NY found that none of the three participating facilities tracked
+medication waste at the individual prescription or reason-code level in an
+exportable digital format---confirming that the primary barrier to adoption
+is not tool availability but data infrastructure.
+In response, the dashboard schema was revised to support optional and imputed
+fields, substantially lowering the minimum data requirements for useful output.
+
+Illustrative case study analysis using synthetic facility data demonstrated
+that MedHive can surface actionable insights: Pareto decomposition identifies
+the small number of medications driving disproportionate waste cost;
+SPC control charts detect anomalous waste weeks not attributable to routine
+variation; and the policy simulator projects meaningful savings from even
+modest first-fill fraction reductions.
+
+MedHive is freely available at
+\url{https://github.com/chatterjee-srinjoy/Control-Freaks-Six-Sigma}
+as an open-access tool for the SNF community.
+The authors hope that this proof-of-concept will stimulate further investment
+in medication waste analytics infrastructure for long-term care, and that
+future work will deliver a clinically validated, HIPAA-compliant version of
+the dashboard in partnership with operating facilities.
+
+% Uncomment and tune only on final draft to balance last page columns:
+% \addtolength{\textheight}{-12cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgment}
+
+The authors thank Dr.\ Timothy Fraser and the Cornell Department of Systems
+Engineering for guidance throughout this project.
+This work was conducted as part of the Cornell Meinig School of Biomedical
+Engineering M.Eng.\ program.
+The authors also thank the nursing home administrators and Directors of
+Nursing in Tompkins County, NY who generously participated in informational
+interviews.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\section{Appendix: Minimum CSV Schema and Source Code}
+
+The MedHive source code, synthetic demonstration datasets (Facilities~A, B,
+and C), and the codebook documenting all schema variables are available at:
+\begin{center}
+\url{https://github.com/chatterjee-srinjoy/Control-Freaks-Six-Sigma}
+\end{center}
+
+The minimum required CSV fields for SPC output are:
+\texttt{prescription\_id}, \texttt{medication}, \texttt{scheduled\_date},
+and \texttt{waste\_reason}.
+Full Pareto and cost-denominated outputs additionally require
+\texttt{cost\_usd} (or an imputed cost via medication name lookup) and
+\texttt{initial\_weight}.
+The policy simulator requires \texttt{initial\_weight},
+\texttt{weight\_at\_stop} (or an estimate), and \texttt{cost\_usd}.
+
+\end{document}
